@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factory Master Guide</title>
+    <title>IT & Factory Master Guide</title>
     <style>
         :root {
             --primary-color: #2c3e50;
             --accent-color: #e67e22;
+            --tech-color: #3498db;
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
         }
@@ -21,7 +22,6 @@
             word-break: keep-all;
         }
 
-        /* 헤더: 고정형 */
         header {
             background-color: var(--primary-color);
             color: white;
@@ -30,22 +30,22 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* 섹션 공통 스타일 */
         section {
-            padding: 2rem 1.2rem;
+            padding: 2.5rem 1.2rem;
             border-bottom: 1px solid #ddd;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .card {
@@ -56,11 +56,9 @@
             margin-bottom: 1rem;
         }
 
-        /* 비교 테이블 스타일 */
         .compare-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
             font-size: 0.9rem;
         }
         .compare-table th, .compare-table td {
@@ -72,15 +70,26 @@
         .bad { color: #e74c3c; font-weight: bold; }
         .good { color: #27ae60; font-weight: bold; }
 
-        /* 강조 텍스트 */
-        .highlight {
-            background: linear-gradient(to top, #ffeaa7 40%, transparent 40%);
-            font-weight: bold;
+        .code-block {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
         }
 
         footer {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 2rem;
             font-size: 0.8rem;
             color: #888;
         }
@@ -89,68 +98,85 @@
 <body>
 
     <header>
-        <h1>Factory Log ⚙️</h1>
+        <h1>Factory & IT Comprehensive Guide ⚙️</h1>
     </header>
 
-    <section id="intro">
-        <h2>01. 공장 게임 소개</h2>
+    <!-- 01. 기존 공장 게임 공략 (내용 유지) -->
+    <section id="factory-guide">
+        <h2>01. 공장 게임 최적화 전략</h2>
         <div class="card">
-            <p>공장 게임은 단순한 생산을 넘어, <span class="highlight">최적의 물류 시스템</span>을 설계하는 시뮬레이션입니다. 자원 채굴부터 최종 조립 라인까지의 자동화 과정을 구축하며 논리적 사고의 쾌감을 느낄 수 있습니다.</p>
-        </div>
-    </section>
-
-    <section id="efficient">
-        <h2>02. 효율적인 공략법</h2>
-        <div class="card">
-            <ul style="list-style: none;">
-                <li>📍 <strong>비율 맞추기:</strong> 입력 자원과 출력 장치의 속도를 1:1로 최적화하세요.</li>
-                <li>📍 <strong>메인 버스(Main Bus):</strong> 핵심 자원을 한 방향으로 흐르게 설계하여 확장을 용이하게 합니다.</li>
-                <li>📍 <strong>모듈화:</strong> 특정 부품 생산 단지를 별도로 구성해 관리 효율을 높이세요.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="comparison">
-        <h2>03. 무엇이 비효율인가?</h2>
-        <div class="card" style="padding: 10px;">
-            <table class="compare-table">
+            <p>공장 게임은 효율적인 물류 설계를 통해 논리적 사고를 확장하는 시뮬레이션입니다.</p>
+            <table class="compare-table" style="margin-top:15px;">
                 <thead>
-                    <tr>
-                        <th>항목</th>
-                        <th>비효율 (Bad)</th>
-                        <th>효율 (Good)</th>
-                    </tr>
+                    <tr><th>항목</th><th>비효율 (Bad)</th><th>효율 (Good)</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>라인 설계</td>
-                        <td class="bad">스파게티(복잡)</td>
-                        <td class="good">직선화/정돈</td>
-                    </tr>
-                    <tr>
-                        <td>확장성</td>
-                        <td class="bad">공간 부족</td>
-                        <td class="good">여유 공간 확보</td>
-                    </tr>
-                    <tr>
-                        <td>물류</td>
-                        <td class="bad">벨트 엉킴</td>
-                        <td class="good">분배기 활용</td>
-                    </tr>
+                    <tr><td>라인 설계</td><td class="bad">스파게티(복잡)</td><td class="good">직선화/정돈</td></tr>
+                    <tr><td>확장성</td><td class="bad">공간 부족</td><td class="good">여유 공간 확보</td></tr>
+                    <tr><td>물류</td><td class="bad">벨트 엉킴</td><td class="good">분배기 활용</td></tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section id="future">
-        <h2>04. 다음 도전할 게임</h2>
-        <div class="card" style="border-left: 5px solid var(--accent-color);">
-            <p>현재 공장을 넘어 차세대 자동화 게임인 <br><strong>[Satisfactory]</strong> 또는 <strong>[Dyson Sphere Program]</strong> 리뷰를 준비 중입니다. 더 거대한 우주 규모의 공장을 기대해 주세요!</p>
+    <!-- 02. 향후 계획 및 프로젝트 -->
+    <section id="roadmap">
+        <h2>02. Future Roadmap & Projects</h2>
+        <div class="card">
+            <p><strong>앞으로의 계획:</strong> 더 복잡한 매커니즘을 가진 차세대 시뮬레이션 공략을 준비하고 있습니다.</p>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>[Satisfactory] 3D 수직 자동화 라인 분석</li>
+                <li>[Dyson Sphere Program] 행성 간 물류 최적화 가이드</li>
+                <li>생산 효율 계산기(Web Tool) 제작 프로젝트</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 03. Web Development 스택 (기술 본연의 내용) -->
+    <section id="web-tech">
+        <h2>03. Web Development Stack</h2>
+        <div class="card">
+            <p>현대 웹을 구성하는 핵심 기술 언어들의 독립적인 역할입니다.</p>
+            
+            <div style="margin-top: 15px;">
+                <strong>HTML: 웹의 구조와 의미</strong>
+                <div class="code-block">&lt;header&gt; 웹 페이지의 제목 &lt;/header&gt;</div>
+                
+                <strong>CSS: 디자인과 레이아웃</strong>
+                <div class="code-block">body { background-color: #f4f7f6; }</div>
+                
+                <strong>JavaScript: 동적 기능과 상호작용</strong>
+                <div class="code-block">button.addEventListener('click', () => { alert('Hello!'); });</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04. IT 개론 기초 이론 -->
+    <section id="it-intro">
+        <h2>04. IT Fundamentals</h2>
+        <div class="card">
+            <p>정보 기술의 핵심이 되는 기본 개념 문서 정보입니다.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>💻 <strong>OS (운영체제):</strong> 하드웨어 자원을 효율적으로 관리하는 시스템 소프트웨어</li>
+                <li>🌐 <strong>Network:</strong> 컴퓨터 간의 데이터 교환을 위한 통신 프로토콜과 인프라</li>
+                <li>📊 <strong>Data Structure:</strong> 데이터를 효율적으로 저장하고 관리하는 추상적인 형태</li>
+                <li>🛡️ <strong>Security:</strong> 정보의 기밀성, 무결성, 가용성을 보호하는 기술</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 05. AI 비주얼 자동 생성 -->
+    <section id="ai-visual">
+        <h2>05. Automated AI Visuals</h2>
+        <div class="card">
+            <p>본 사이트의 테마를 기반으로 AI가 자동 생성한 이미지입니다.</p>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tech Background" class="img-placeholder">
+            <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 5px;">[AI Generated: High-Tech Infrastructure View]</p>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 Factory Gaming Blog. 한 손 조작에 최적화됨.</p>
+        <p>© 2026 Factory & IT Gaming Blog. 모든 정보는 최신 트렌드를 반영합니다.</p>
     </footer>
 
 </body>
