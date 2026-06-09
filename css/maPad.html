@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Margin vs Padding</title>
+<style>
+  body { font-family: sans-serif; background: #f0f0f0; padding: 40px; color: #333; }
+  h1   { font-size: 1.4rem; margin-bottom: 8px; }
+  p    { font-size: 0.9rem; color: #666; margin-bottom: 32px; }
+
+  /* ── 섹션 ── */
+  section { margin-bottom: 40px; }
+  h2 { font-size: 1rem; margin-bottom: 12px; border-left: 4px solid #555; padding-left: 8px; }
+
+  /* ── Margin 데모 ── */
+  .margin-wrap { background: #ffd580; display: inline-block; }
+
+  .box-margin {
+    background: #4a90d9;
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 12px 16px;
+    margin: 30px;          /* 핵심: 바깥 여백 */
+  }
+
+  /* ── Padding 데모 ── */
+  .box-padding {
+    background: #4a90d9;
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 30px;         /* 핵심: 안쪽 여백 */
+    display: inline-block;
+  }
+
+  /* ── 방향별 데모 ── */
+  .dir-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+
+  .dir-box {
+    background: #4a90d9;
+    color: #fff;
+    font-size: 0.78rem;
+    text-align: center;
+    width: 90px; height: 56px;
+    line-height: 1.3;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .m-top    { margin-top: 24px; }
+  .m-right  { margin-right: 24px; }
+  .m-bottom { margin-bottom: 24px; }
+  .m-left   { margin-left: 24px; }
+
+  .p-top    { padding-top: 24px; }
+  .p-right  { padding-right: 24px; }
+  .p-bottom { padding-bottom: 24px; }
+  .p-left   { padding-left: 24px; }
+
+  .dir-item { background: #ffd580; display: inline-block; }
+  .dir-item-p { background: #a8d8a8; display: inline-block; }
+
+  /* ── 비교표 ── */
+  table { border-collapse: collapse; font-size: 0.85rem; width: 100%; max-width: 480px; }
+  th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+  th { background: #ddd; }
+  .m { color: #b85c00; font-weight: 600; }
+  .p { color: #2a7a2a; font-weight: 600; }
+
+  /* ── 범례 ── */
+  .legend { font-size: 0.8rem; display: flex; gap: 16px; margin-bottom: 10px; }
+  .dot { width: 14px; height: 14px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+  .dot-m { background: #ffd580; }
+  .dot-p { background: #a8d8a8; }
+  .dot-b { background: #4a90d9; }
+</style>
+</head>
+<body>
+
+<h1>Margin vs Padding</h1>
+<p>margin은 <strong>요소 바깥</strong>의 여백, padding은 <strong>요소 안쪽</strong>의 여백입니다.</p>
+
+<!-- 1. Margin -->
+<section>
+  <h2>margin — 바깥 여백</h2>
+  <div class="legend">
+    <span><span class="dot dot-m"></span>margin 영역</span>
+    <span><span class="dot dot-b"></span>요소(box)</span>
+  </div>
+  <div class="margin-wrap">
+    <div class="box-margin">box &nbsp;·&nbsp; margin: 30px</div>
+  </div>
+  <p style="margin-top:10px;font-size:0.82rem;color:#888;">노란 배경 = margin 공간 / 파란 박스 = 실제 요소</p>
+</section>
+
+<!-- 2. Padding -->
+<section>
+  <h2>padding — 안쪽 여백</h2>
+  <div class="legend">
+    <span><span class="dot dot-p"></span>padding 영역 (배경색 포함)</span>
+    <span><span class="dot dot-b"></span>요소(box)</span>
+  </div>
+  <div class="box-padding" style="background:#a8d8a8;">
+    <div style="background:#4a90d9;color:#fff;font-size:0.85rem;padding:12px 16px;">
+      box &nbsp;·&nbsp; padding: 30px
+    </div>
+  </div>
+  <p style="margin-top:10px;font-size:0.82rem;color:#888;">초록 배경 = padding 공간(요소의 일부) / 파란 박스 = 콘텐츠</p>
+</section>
+
+<!-- 3. 방향별 -->
+<section>
+  <h2>방향별 지정</h2>
+  <div class="dir-row">
+    <div>
+      <div style="font-size:0.8rem;margin-bottom:6px;color:#666;">margin-top / right / bottom / left</div>
+      <div class="dir-row">
+        <div class="dir-item"><div class="dir-box m-top">margin<br>top</div></div>
+        <div class="dir-item"><div class="dir-box m-right">margin<br>right</div></div>
+        <div class="dir-item"><div class="dir-box m-bottom">margin<br>bottom</div></div>
+        <div class="dir-item"><div class="dir-box m-left">margin<br>left</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.8rem;margin-bottom:6px;color:#666;">padding-top / right / bottom / left</div>
+      <div class="dir-row">
+        <div class="dir-item-p"><div class="dir-box p-top" style="background:#2e7d32;">padding<br>top</div></div>
+        <div class="dir-item-p"><div class="dir-box p-right" style="background:#2e7d32;">padding<br>right</div></div>
+        <div class="dir-item-p"><div class="dir-box p-bottom" style="background:#2e7d32;">padding<br>bottom</div></div>
+        <div class="dir-item-p"><div class="dir-box p-left" style="background:#2e7d32;">padding<br>left</div></div>
+      </div>
+    </div>
+  </div>
+  <pre style="margin-top:14px;background:#222;color:#eee;padding:12px;font-size:0.8rem;border-radius:6px;">margin:  30px 10px 30px 10px;  /* top right bottom left */
+padding: 30px 10px 30px 10px;  /* 동일한 축약 문법 */</pre>
+</section>
+
+<!-- 4. 비교표 -->
+<section>
+  <h2>한눈에 비교</h2>
+  <table>
+    <tr><th>항목</th><th class="m">margin</th><th class="p">padding</th></tr>
+    <tr><td>위치</td><td>요소 바깥</td><td>요소 안쪽</td></tr>
+    <tr><td>배경색 적용</td><td>X (투명)</td><td>O (요소 배경색)</td></tr>
+    <tr><td>크기에 영향</td><td>X</td><td>O (box-sizing에 따라)</td></tr>
+    <tr><td>auto 사용</td><td>O (가운데 정렬)</td><td>X</td></tr>
+    <tr><td>음수 값</td><td>O</td><td>X</td></tr>
+  </table>
+</section>
+
+</body>
+</html>

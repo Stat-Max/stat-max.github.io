@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>CSS Position</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: sans-serif; background: #f2f2f2; color: #333; }
+
+  /* ── 공통 ── */
+  h1  { background: #222; color: #fff; padding: 20px 28px; font-size: 1.3rem; }
+  h1 small { font-size: 0.8rem; color: #aaa; margin-left: 10px; font-weight: 400; }
+
+  .page { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  section { margin-bottom: 48px; }
+
+  h2 {
+    font-size: 1rem; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .badge {
+    font-family: monospace; font-size: 0.78rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; color: #fff;
+  }
+  .desc { font-size: 0.85rem; color: #666; margin-bottom: 14px; line-height: 1.6; }
+
+  /* 데모 컨테이너 */
+  .demo {
+    background: #dde3ec;
+    border: 2px solid #bbb;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 0.82rem;
+    position: relative;        /* absolute 자식의 기준 */
+    min-height: 110px;
+  }
+
+  /* 형제 박스 */
+  .sibling {
+    background: #b0c4de;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    color: #333;
+  }
+
+  /* 대상 박스 공통 */
+  .box {
+    padding: 10px 14px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+
+  /* 코드 한 줄 */
+  pre {
+    background: #1e1e1e; color: #d4d4d4;
+    font-size: 0.78rem; padding: 10px 14px;
+    border-radius: 6px; margin-top: 10px;
+    overflow-x: auto;
+  }
+  .ky { color: #569cd6; }  /* keyword */
+  .vl { color: #ce9178; }  /* value */
+  .cm { color: #6a9955; }  /* comment */
+
+  /* ── 색상 ── */
+  .c-static   { background: #777; }
+  .c-relative { background: #2e7fd9; }
+  .c-absolute { background: #c0392b; }
+  .c-fixed    { background: #27ae60; }
+  .c-sticky   { background: #8e44ad; }
+
+  .bd-static   { border-color: #777; }
+  .bd-relative { border-color: #2e7fd9; }
+  .bd-absolute { border-color: #c0392b; }
+  .bd-fixed    { border-color: #27ae60; }
+  .bd-sticky   { border-color: #8e44ad; }
+
+  /* ── 1. static ── */
+  .box-static { position: static; }   /* 기본값, 명시해도 동일 */
+
+  /* ── 2. relative ── */
+  .box-relative {
+    position: relative;
+    top: 16px;
+    left: 24px;
+  }
+
+  /* ── 3. absolute ── */
+  .demo-abs { min-height: 130px; }
+  .box-absolute {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+
+  /* ── 4. fixed — 실제 고정은 스크롤 필요하므로 시뮬레이션 ── */
+  .fixed-sim-wrap {
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+    background: #dde3ec;
+    border: 2px solid #bbb;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .fixed-sim-content { padding-top: 4px; }
+  .fixed-sim-content p {
+    background: #b0c4de; border-radius: 4px;
+    padding: 8px 12px; margin-bottom: 8px;
+    font-size: 0.82rem;
+  }
+  .box-fixed-sim {
+    position: absolute;   /* 시뮬레이션용 — 실제론 fixed */
+    bottom: 12px; right: 12px;
+  }
+
+  /* 실제 fixed 박스 (페이지에 고정) */
+  .box-fixed-real {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    z-index: 100;
+  }
+
+  /* ── 5. sticky ── */
+  .scroll-box {
+    height: 200px;
+    overflow-y: auto;
+    background: #dde3ec;
+    border: 2px solid #bbb;
+    border-radius: 8px;
+    padding: 0 16px 16px;
+  }
+  .box-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 10px 14px;
+    margin: 0 -16px 10px;
+  }
+  .scroll-item {
+    background: #b0c4de;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 0.82rem;
+  }
+
+  /* ── 비교표 ── */
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: center; }
+  th { background: #333; color: #fff; }
+  td:first-child { text-align: left; font-weight: 600; }
+  .yes { color: #27ae60; font-weight: 700; }
+  .no  { color: #999; }
+</style>
+</head>
+<body>
+
+<h1>CSS position <small>static · relative · absolute · fixed · sticky</small></h1>
+
+<div class="page">
+
+<!-- ────────────────── 1. static ────────────────── -->
+<section>
+  <h2>
+    <span class="badge c-static">static</span>
+    기본값 — 일반 흐름(normal flow) 그대로
+  </h2>
+  <p class="desc">
+    모든 요소의 기본값입니다. <code>top / left / right / bottom</code> 속성이 <strong>무시</strong>됩니다.
+    문서 흐름에 따라 순서대로 배치됩니다.
+  </p>
+  <div class="demo bd-static">
+    <div class="sibling">형제 요소 A</div>
+    <div class="box c-static box-static">position: static (기본값) — 흐름대로</div>
+    <div class="sibling" style="margin-top:8px;">형제 요소 B</div>
+  </div>
+  <pre><span class="ky">position</span>: <span class="vl">static</span>;  <span class="cm">/* top/left 등 좌표 속성 무효 */</span></pre>
+</section>
+
+<!-- ────────────────── 2. relative ────────────────── -->
+<section>
+  <h2>
+    <span class="badge c-relative">relative</span>
+    원래 자리 기준으로 이동
+  </h2>
+  <p class="desc">
+    <strong>자기 원래 위치</strong>를 기준으로 top / left 등으로 이동합니다.
+    원래 자리는 <em>비워진 채 유지</em>되어 형제 요소에 영향을 주지 않습니다.
+    자식 absolute 요소의 기준점(containing block)이 됩니다.
+  </p>
+  <div class="demo bd-relative">
+    <div class="sibling">형제 요소 A</div>
+    <div class="box c-relative box-relative">
+      position: relative &nbsp;·&nbsp; top: 16px, left: 24px
+    </div>
+    <div class="sibling" style="margin-top:8px;">형제 요소 B — 원래 자리는 그대로 유지됨</div>
+  </div>
+  <pre><span class="ky">position</span>: <span class="vl">relative</span>;
+<span class="ky">top</span>: <span class="vl">16px</span>;
+<span class="ky">left</span>: <span class="vl">24px</span>;  <span class="cm">/* 원래 위치에서 16px 아래, 24px 오른쪽으로 이동 */</span></pre>
+</section>
+
+<!-- ────────────────── 3. absolute ────────────────── -->
+<section>
+  <h2>
+    <span class="badge c-absolute">absolute</span>
+    가장 가까운 positioned 조상 기준
+  </h2>
+  <p class="desc">
+    <strong>일반 흐름에서 완전히 빠져나옵니다.</strong>
+    <code>position: relative/absolute/fixed/sticky</code>인 가장 가까운 조상을 기준으로 좌표가 결정됩니다.
+    조상이 없으면 <code>&lt;html&gt;</code>(뷰포트)이 기준이 됩니다.
+  </p>
+  <div class="demo bd-absolute demo-abs">
+    <div class="sibling">형제 요소 A — absolute 박스 자리 없음</div>
+    <div class="sibling">형제 요소 B</div>
+    <div class="box c-absolute box-absolute">
+      absolute<br>top:12 right:12
+    </div>
+  </div>
+  <pre><span class="cm">/* 부모에 position:relative 필요 */</span>
+<span class="ky">position</span>: <span class="vl">absolute</span>;
+<span class="ky">top</span>: <span class="vl">12px</span>;
+<span class="ky">right</span>: <span class="vl">12px</span>;</pre>
+</section>
+
+<!-- ────────────────── 4. fixed ────────────────── -->
+<section>
+  <h2>
+    <span class="badge c-fixed">fixed</span>
+    뷰포트(화면) 기준으로 고정
+  </h2>
+  <p class="desc">
+    <strong>스크롤해도 항상 같은 위치</strong>에 고정됩니다. 기준은 뷰포트(브라우저 창)입니다.
+    일반 흐름에서 빠져나오며, 네비게이션 바·플로팅 버튼에 주로 사용합니다.
+    → 오른쪽 하단의 <strong style="color:#27ae60;">초록 버튼</strong>이 실제 fixed 예시입니다.
+  </p>
+  <div class="fixed-sim-wrap">
+    <div class="fixed-sim-content">
+      <p>콘텐츠 영역 (스크롤해도 fixed 요소는 화면에 고정)</p>
+      <p>콘텐츠 영역</p>
+    </div>
+    <div class="box c-fixed box-fixed-sim">fixed<br>bottom:12 right:12</div>
+  </div>
+  <pre><span class="ky">position</span>: <span class="vl">fixed</span>;
+<span class="ky">bottom</span>: <span class="vl">20px</span>;
+<span class="ky">right</span>: <span class="vl">20px</span>;  <span class="cm">/* 뷰포트 기준, 스크롤 무관하게 고정 */</span></pre>
+</section>
+
+<!-- ────────────────── 5. sticky ────────────────── -->
+<section>
+  <h2>
+    <span class="badge c-sticky">sticky</span>
+    스크롤 중 임계점에서 고정
+  </h2>
+  <p class="desc">
+    평소에는 <code>relative</code>처럼 동작하다가, 스크롤이 지정한 임계점(예: <code>top: 0</code>)에
+    닿는 순간 <code>fixed</code>처럼 고정됩니다. 부모 컨테이너를 벗어나면 다시 흘러갑니다.
+    섹션 헤더·테이블 열 머리에 자주 사용합니다. <strong>아래 박스를 직접 스크롤해 보세요.</strong>
+  </p>
+  <div class="scroll-box">
+    <div class="box c-sticky box-sticky">🟣 sticky 헤더 — top: 0 에서 고정됩니다</div>
+    <div class="scroll-item">항목 1</div>
+    <div class="scroll-item">항목 2</div>
+    <div class="scroll-item">항목 3</div>
+    <div class="scroll-item">항목 4</div>
+    <div class="scroll-item">항목 5</div>
+    <div class="scroll-item">항목 6</div>
+    <div class="scroll-item">항목 7</div>
+  </div>
+  <pre><span class="ky">position</span>: <span class="vl">sticky</span>;
+<span class="ky">top</span>: <span class="vl">0</span>;  <span class="cm">/* 스크롤 시 이 위치에서 고정 시작 */</span></pre>
+</section>
+
+<!-- ────────────────── 비교표 ────────────────── -->
+<section>
+  <h2>한눈에 비교</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>속성</th>
+        <th>일반 흐름 유지</th>
+        <th>좌표 기준</th>
+        <th>스크롤 고정</th>
+        <th>주요 용도</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge c-static">static</span></td>
+        <td class="yes">O</td>
+        <td class="no">—</td>
+        <td class="no">X</td>
+        <td>기본 배치</td>
+      </tr>
+      <tr>
+        <td><span class="badge c-relative">relative</span></td>
+        <td class="yes">O (자리 유지)</td>
+        <td>자기 원래 위치</td>
+        <td class="no">X</td>
+        <td>미세 조정, absolute 기준점</td>
+      </tr>
+      <tr>
+        <td><span class="badge c-absolute">absolute</span></td>
+        <td class="no">X</td>
+        <td>positioned 조상</td>
+        <td class="no">X</td>
+        <td>툴팁, 드롭다운, 뱃지</td>
+      </tr>
+      <tr>
+        <td><span class="badge c-fixed">fixed</span></td>
+        <td class="no">X</td>
+        <td>뷰포트</td>
+        <td class="yes">O (항상)</td>
+        <td>상단 네비, 플로팅 버튼</td>
+      </tr>
+      <tr>
+        <td><span class="badge c-sticky">sticky</span></td>
+        <td class="yes">O (평소엔)</td>
+        <td>스크롤 컨테이너</td>
+        <td class="yes">O (임계점)</td>
+        <td>섹션 헤더, 테이블 열 고정</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</div><!-- /page -->
+
+<!-- 실제 fixed 버튼 -->
+<div class="box c-fixed box-fixed-real" style="text-align:center;font-size:0.75rem;font-weight:700;padding:12px 16px;border-radius:8px;line-height:1.4;">
+  📌 fixed<br>항상 고정
+</div>
+
+</body>
+</html>
