@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Block vs Inline 요소</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d2e;
+      --surface2: #232640;
+      --border: #2e3260;
+      --block-color: #4f6ef7;
+      --block-light: #1a2260;
+      --block-glow: rgba(79, 110, 247, 0.18);
+      --inline-color: #f7a94f;
+      --inline-light: #2e1f00;
+      --inline-glow: rgba(247, 169, 79, 0.18);
+      --text: #e8eaf6;
+      --muted: #8891c0;
+      --code-bg: #0a0c18;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+      max-width: 860px;
+      margin: 0 auto 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    header h1 .b { color: var(--block-color); }
+    header h1 .i { color: var(--inline-color); }
+
+    header p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 14px; height: 14px;
+      border-radius: 3px;
+    }
+
+    .legend-dot.block  { background: var(--block-color); }
+    .legend-dot.inline { background: var(--inline-color); }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 980px;
+      margin: 0 auto 3rem;
+    }
+
+    @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .card-header {
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 5px;
+    }
+
+    .card.block-card .card-header .tag {
+      background: var(--block-light);
+      color: var(--block-color);
+    }
+
+    .card.inline-card .card-header .tag {
+      background: var(--inline-light);
+      color: var(--inline-color);
+    }
+
+    .card-header .element-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card.block-card  .element-name { color: var(--block-color); }
+    .card.inline-card .element-name { color: var(--inline-color); }
+
+    .card-body { padding: 1.4rem; }
+
+    .desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── DEMO BOX ── */
+    .demo-box {
+      background: var(--code-bg);
+      border-radius: 10px;
+      padding: 1.1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    /* Block demo elements */
+    .demo-div {
+      background: var(--block-glow);
+      border: 1.5px solid var(--block-color);
+      border-radius: 6px;
+      padding: 0.55rem 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--block-color);
+      font-size: 0.82rem;
+    }
+    .demo-div:last-child { margin-bottom: 0; }
+
+    .demo-p {
+      background: rgba(79,110,247,0.08);
+      border-left: 3px solid var(--block-color);
+      border-radius: 0 6px 6px 0;
+      padding: 0.55rem 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #a0b0ff;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .demo-h { font-weight: 700; color: var(--block-color); padding: 0.3rem 0; display: block; }
+
+    .demo-ul { padding-left: 1.4rem; }
+    .demo-ul li {
+      color: #a0b0ff;
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+
+    /* Inline demo wrapper */
+    .inline-flow {
+      line-height: 2.2;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .demo-span {
+      background: var(--inline-glow);
+      border: 1.5px solid var(--inline-color);
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+      color: var(--inline-color);
+      font-size: 0.82rem;
+    }
+
+    .demo-a {
+      color: #f7c94f;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .demo-strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .demo-em {
+      color: #c9a0ff;
+      font-style: italic;
+    }
+
+    .demo-code {
+      background: #1e2230;
+      color: #7dd3c8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* ── CODE SNIPPET ── */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      line-height: 1.75;
+      overflow-x: auto;
+      color: #8891c0;
+    }
+
+    .code-block .tag-name { color: #7dd3c8; }
+    .code-block .attr    { color: #f7a94f; }
+    .code-block .text    { color: #e8eaf6; }
+    .code-block .comment { color: #4a5068; font-style: italic; }
+
+    /* ── COMPARISON SECTION ── */
+    .compare-section {
+      max-width: 980px;
+      margin: 0 auto 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .compare-header {
+      padding: 1.2rem 1.6rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .compare-header span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-left: 0.5rem;
+    }
+
+    .compare-body { padding: 1.6rem; }
+
+    .compare-live {
+      background: var(--code-bg);
+      border-radius: 10px;
+      padding: 1.4rem;
+      margin-bottom: 1.4rem;
+      line-height: 1.9;
+      font-size: 0.9rem;
+    }
+
+    /* actual block/inline in live preview */
+    .live-block {
+      display: block;
+      background: var(--block-glow);
+      border: 1.5px dashed var(--block-color);
+      border-radius: 5px;
+      padding: 0.35rem 0.7rem;
+      margin-bottom: 0.35rem;
+      color: var(--block-color);
+      font-size: 0.83rem;
+    }
+
+    .live-inline {
+      background: var(--inline-glow);
+      border: 1.5px dashed var(--inline-color);
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+      color: var(--inline-color);
+      font-size: 0.83rem;
+    }
+
+    /* ── TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 0.8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-table th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .compare-table td:first-child { color: var(--muted); }
+
+    .compare-table .block-val { color: var(--block-color); }
+    .compare-table .inline-val { color: var(--inline-color); }
+
+    /* ── FULL WIDTH CARD ── */
+    .full-card {
+      max-width: 980px;
+      margin: 0 auto 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .full-card .card-header { padding: 1.2rem 1.6rem; }
+    .full-card .card-body   { padding: 1.6rem; }
+
+    .full-card .desc { margin-bottom: 1.4rem; }
+
+    /* display override demo */
+    .override-row {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .override-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      min-width: 160px;
+      padding-top: 0.3rem;
+    }
+
+    .override-demo {
+      flex: 1;
+      background: var(--code-bg);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+    }
+
+    .span-block {
+      display: block;
+      background: var(--block-glow);
+      border: 1.5px solid var(--block-color);
+      border-radius: 5px;
+      padding: 0.4rem 0.7rem;
+      color: var(--block-color);
+      font-size: 0.82rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .div-inline {
+      display: inline;
+      background: var(--inline-glow);
+      border: 1px solid var(--inline-color);
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+      color: var(--inline-color);
+      font-size: 0.82rem;
+    }
+
+    .div-inline-block {
+      display: inline-block;
+      background: rgba(147, 79, 247, 0.15);
+      border: 1.5px solid #934ff7;
+      border-radius: 4px;
+      padding: 0.3rem 0.7rem;
+      color: #c8a0ff;
+      font-size: 0.82rem;
+      width: 140px;
+      text-align: center;
+      margin-right: 0.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <p class="eyebrow">HTML / CSS 기초 개념</p>
+  <h1>
+    <span class="b">Block</span> 요소 vs
+    <span class="i">Inline</span> 요소
+  </h1>
+  <p>HTML 요소는 기본적으로 어떻게 공간을 차지하느냐에 따라 두 가지 유형으로 나뉩니다. 아래에서 각 유형의 동작 방식과 대표 태그를 살펴보세요.</p>
+</header>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot block"></div>
+    <span>Block 요소 — 새 줄에서 시작, 가로폭 100%</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot inline"></div>
+    <span>Inline 요소 — 콘텐츠 흐름 안에서 나란히</span>
+  </div>
+</div>
+
+<!-- CARD GRID -->
+<div class="grid">
+
+  <!-- div -->
+  <div class="card block-card">
+    <div class="card-header">
+      <span class="tag">block</span>
+      <span class="element-name">&lt;div&gt;</span>
+    </div>
+    <div class="card-body">
+      <p class="desc">범용 컨테이너로, 의미 없이 여러 요소를 묶을 때 사용합니다. 항상 새 줄에서 시작하며 부모 너비를 꽉 채웁니다.</p>
+      <div class="demo-box">
+        <div class="demo-div">첫 번째 div — 한 줄을 모두 차지합니다</div>
+        <div class="demo-div">두 번째 div — 자동으로 아래로 내려갑니다</div>
+        <div class="demo-div">세 번째 div — 각각 독립된 행에 위치합니다</div>
+      </div>
+      <div class="code-block">
+<span class="tag-name">&lt;div&gt;</span><span class="text">첫 번째 div</span><span class="tag-name">&lt;/div&gt;</span>
+<span class="tag-name">&lt;div&gt;</span><span class="text">두 번째 div</span><span class="tag-name">&lt;/div&gt;</span>
+<span class="comment">/* 각 div는 새 줄에서 시작 */</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- span -->
+  <div class="card inline-card">
+    <div class="card-header">
+      <span class="tag">inline</span>
+      <span class="element-name">&lt;span&gt;</span>
+    </div>
+    <div class="card-body">
+      <p class="desc">범용 인라인 컨테이너로, 텍스트 일부에 스타일을 적용할 때 사용합니다. 줄을 바꾸지 않고 텍스트 흐름 안에 배치됩니다.</p>
+      <div class="demo-box">
+        <div class="inline-flow">
+          이 문장에서 <span class="demo-span">span 영역</span>은 텍스트 흐름 안에 그대로 녹아들어 있습니다.
+          <span class="demo-span">두 번째 span</span>도 마찬가지입니다.
+        </div>
+      </div>
+      <div class="code-block">
+<span class="text">텍스트 안의 </span><span class="tag-name">&lt;span&gt;</span><span class="text">강조 부분</span><span class="tag-name">&lt;/span&gt;</span>
+<span class="text"> 계속 이어집니다.</span>
+<span class="comment">/* 줄 바꿈 없이 인라인 배치 */</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- p / h -->
+  <div class="card block-card">
+    <div class="card-header">
+      <span class="tag">block</span>
+      <span class="element-name">&lt;p&gt; / &lt;h1&gt;~&lt;h6&gt;</span>
+    </div>
+    <div class="card-body">
+      <p class="desc">단락과 제목 태그입니다. 브라우저가 위아래 여백(margin)을 기본으로 추가하며, 새 줄에서 시작합니다.</p>
+      <div class="demo-box">
+        <span class="demo-h" style="font-size:1.1rem;">&#60;h2&#62; 제목 태그</span>
+        <div class="demo-p">&#60;p&#62; 단락 텍스트입니다. 블록 요소이므로 위아래로 여백이 생기고 새 줄에서 시작합니다.</div>
+        <div class="demo-p">&#60;p&#62; 또 다른 단락 — 자동으로 다음 줄로 이동합니다.</div>
+      </div>
+      <div class="code-block">
+<span class="tag-name">&lt;h2&gt;</span><span class="text">제목</span><span class="tag-name">&lt;/h2&gt;</span>
+<span class="tag-name">&lt;p&gt;</span><span class="text">첫 번째 단락</span><span class="tag-name">&lt;/p&gt;</span>
+<span class="tag-name">&lt;p&gt;</span><span class="text">두 번째 단락</span><span class="tag-name">&lt;/p&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- a, strong, em, code -->
+  <div class="card inline-card">
+    <div class="card-header">
+      <span class="tag">inline</span>
+      <span class="element-name">&lt;a&gt; &lt;strong&gt; &lt;em&gt; &lt;code&gt;</span>
+    </div>
+    <div class="card-body">
+      <p class="desc">링크, 굵은 글씨, 기울임꼴, 인라인 코드 태그입니다. 모두 텍스트 흐름을 유지하며 나란히 배치됩니다.</p>
+      <div class="demo-box">
+        <div class="inline-flow">
+          <a class="demo-a">&lt;a&gt; 링크</a> 다음에
+          <strong class="demo-strong">&lt;strong&gt; 강조</strong>, 그리고
+          <em class="demo-em">&lt;em&gt; 기울임</em>과
+          <code class="demo-code">&lt;code&gt; 코드</code>가
+          모두 한 줄에 나란히 표시됩니다.
+        </div>
+      </div>
+      <div class="code-block">
+<span class="tag-name">&lt;a&gt;</span><span class="text">링크</span><span class="tag-name">&lt;/a&gt;</span>
+<span class="tag-name">&lt;strong&gt;</span><span class="text">강조</span><span class="tag-name">&lt;/strong&gt;</span>
+<span class="tag-name">&lt;em&gt;</span><span class="text">기울임</span><span class="tag-name">&lt;/em&gt;</span>
+<span class="tag-name">&lt;code&gt;</span><span class="text">코드</span><span class="tag-name">&lt;/code&gt;</span>
+<span class="comment">/* 모두 인라인 — 줄 바꿈 없음 */</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ul / ol -->
+  <div class="card block-card">
+    <div class="card-header">
+      <span class="tag">block</span>
+      <span class="element-name">&lt;ul&gt; / &lt;ol&gt;</span>
+    </div>
+    <div class="card-body">
+      <p class="desc">목록 태그입니다. <code class="demo-code">&lt;ul&gt;</code>은 순서 없는 목록, <code class="demo-code">&lt;ol&gt;</code>은 순서 있는 목록이며 각각 블록을 형성합니다.</p>
+      <div class="demo-box">
+        <div class="demo-div" style="margin-bottom:0.6rem;">
+          &lt;ul&gt; 순서 없는 목록
+          <ul class="demo-ul" style="margin-top:0.4rem;">
+            <li>항목 A</li>
+            <li>항목 B</li>
+            <li>항목 C</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block">
+<span class="tag-name">&lt;ul&gt;</span>
+  <span class="tag-name">&lt;li&gt;</span><span class="text">항목 A</span><span class="tag-name">&lt;/li&gt;</span>
+  <span class="tag-name">&lt;li&gt;</span><span class="text">항목 B</span><span class="tag-name">&lt;/li&gt;</span>
+<span class="tag-name">&lt;/ul&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- img, input, button -->
+  <div class="card inline-card">
+    <div class="card-header">
+      <span class="tag">inline</span>
+      <span class="element-name">&lt;img&gt; &lt;input&gt; &lt;button&gt;</span>
+    </div>
+    <div class="card-body">
+      <p class="desc">이미지, 입력창, 버튼도 기본적으로 인라인 요소입니다. 텍스트와 함께 같은 줄에 흐릅니다. (button은 inline-block에 가깝습니다.)</p>
+      <div class="demo-box">
+        <div class="inline-flow">
+          텍스트 옆에
+          <span class="demo-span">🖼 img</span>
+          <span class="demo-span" style="border-color:#aaa;color:#aaa;">[ input ]</span>
+          <span class="demo-span" style="border-color:#c8a0ff;color:#c8a0ff;">버튼</span>
+          이 모두 나란히 옵니다.
+        </div>
+      </div>
+      <div class="code-block">
+<span class="text">텍스트 </span><span class="tag-name">&lt;img </span><span class="attr">src</span><span class="text">="..."</span><span class="tag-name">&gt;</span>
+<span class="tag-name">&lt;input </span><span class="attr">type</span><span class="text">="text"</span><span class="tag-name">&gt;</span>
+<span class="tag-name">&lt;button&gt;</span><span class="text">클릭</span><span class="tag-name">&lt;/button&gt;</span>
+<span class="comment">/* 세 요소 모두 인라인 배치 */</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- COMPARISON SECTION -->
+<div class="compare-section">
+  <div class="compare-header">
+    Block vs Inline — 나란히 비교 <span>동일한 콘텐츠, 다른 배치 방식</span>
+  </div>
+  <div class="compare-body">
+    <p class="desc">아래 점선 박스는 각 요소가 실제로 어떻게 공간을 차지하는지 시각화합니다.</p>
+    <div class="compare-live">
+      <span class="live-block">블록 요소 — 가로 전체를 차지합니다</span>
+      <span class="live-block">블록 요소 — 항상 새 줄에서 시작합니다</span>
+      <br>
+      <span style="color:var(--muted);font-size:0.82rem;">인라인 요소는 → </span>
+      <span class="live-inline">인라인 A</span>
+      <span style="color:var(--muted);font-size:0.82rem;"> 그리고 </span>
+      <span class="live-inline">인라인 B</span>
+      <span style="color:var(--muted);font-size:0.82rem;"> 나란히 흐릅니다.</span>
+    </div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>특성</th>
+          <th>Block 요소</th>
+          <th>Inline 요소</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>새 줄 시작</td>
+          <td class="block-val">✓ 항상 새 줄</td>
+          <td class="inline-val">✗ 흐름 유지</td>
+        </tr>
+        <tr>
+          <td>기본 너비</td>
+          <td class="block-val">부모 너비 100%</td>
+          <td class="inline-val">콘텐츠 크기만큼</td>
+        </tr>
+        <tr>
+          <td>width / height 지정</td>
+          <td class="block-val">✓ 가능</td>
+          <td class="inline-val">✗ 무시됨</td>
+        </tr>
+        <tr>
+          <td>margin / padding</td>
+          <td class="block-val">4방향 모두 적용</td>
+          <td class="inline-val">좌우만 완전 적용</td>
+        </tr>
+        <tr>
+          <td>대표 태그</td>
+          <td class="block-val">div, p, h1~h6, ul, ol, section, article</td>
+          <td class="inline-val">span, a, strong, em, img, input, button</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- DISPLAY OVERRIDE -->
+<div class="full-card">
+  <div class="card-header" style="padding:1.2rem 1.6rem;border-bottom:1px solid var(--border);">
+    <span style="font-size:0.95rem;font-weight:600;">CSS display 속성으로 동작 바꾸기</span>
+  </div>
+  <div class="card-body">
+    <p class="desc">
+      CSS <code class="demo-code">display</code> 속성을 사용하면 원래 유형과 관계없이 블록 / 인라인 동작을 변경할 수 있습니다. <code class="demo-code">inline-block</code>은 인라인처럼 흐르면서도 width/height를 지정할 수 있는 중간 형태입니다.
+    </p>
+
+    <!-- display: block on span -->
+    <div class="override-row">
+      <div class="override-label"><code class="demo-code">span { display: block }</code></div>
+      <div class="override-demo">
+        <span class="span-block">span이지만 블록처럼 새 줄을 차지합니다</span>
+        <span class="span-block">두 번째 span도 아래로 내려갑니다</span>
+      </div>
+    </div>
+
+    <!-- display: inline on div -->
+    <div class="override-row">
+      <div class="override-label"><code class="demo-code">div { display: inline }</code></div>
+      <div class="override-demo" style="padding:0.9rem 1rem;">
+        <span style="color:var(--muted);font-size:0.82rem;">텍스트와 </span><div class="div-inline">div지만 인라인</div><span style="color:var(--muted);font-size:0.82rem;"> 처럼 나란히 배치됩니다.</span>
+      </div>
+    </div>
+
+    <!-- display: inline-block -->
+    <div class="override-row">
+      <div class="override-label"><code class="demo-code">display: inline-block</code></div>
+      <div class="override-demo" style="padding:0.9rem 1rem;">
+        <span class="demo-span" style="font-size:0.75rem;color:var(--muted);background:none;border:none;padding:0;">나란히 + 크기 지정: </span>
+        <div class="div-inline-block">박스 A<br><span style="font-size:0.7rem;color:#8891c0;">140px 너비</span></div>
+        <div class="div-inline-block">박스 B<br><span style="font-size:0.7rem;color:#8891c0;">140px 너비</span></div>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top:0.4rem;">
+<span class="comment">/* inline-block: 인라인처럼 흐르지만 width/height 지정 가능 */</span>
+<span class="attr">span</span> { <span class="tag-name">display</span>: <span class="text">block</span>; }      <span class="comment">/* span → 블록 동작 */</span>
+<span class="attr">div</span>  { <span class="tag-name">display</span>: <span class="text">inline</span>; }     <span class="comment">/* div  → 인라인 동작 */</span>
+<span class="attr">div</span>  { <span class="tag-name">display</span>: <span class="text">inline-block</span>; } <span class="comment">/* 중간 형태 */</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  HTML Block &amp; Inline 요소 시각화 가이드 &nbsp;·&nbsp; CSS display 속성으로 동작을 자유롭게 변경할 수 있습니다
+</footer>
+
+</body>
+</html>
