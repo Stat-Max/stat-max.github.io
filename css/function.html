@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Transform scale & Transition timing-function 실습</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 30px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    h2 {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 8px;
+    }
+
+    p {
+      color: #666;
+    }
+
+    /* 박스들을 감싸는 영역 */
+    .container {
+      background-color: #eee;
+      padding: 30px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    /* 공통 박스 기본 스타일 */
+    .box {
+      width: 150px;
+      height: 60px;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      margin: 25px 0;
+      
+      /* 
+        [Transition 설정]
+        - transform: 1.5초 동안 이동 및 크기 변화
+        - background-color: 1.5초 동안 색상 변화
+      */
+      transition: transform 1.5s, background-color 1.5s;
+    }
+
+    /* --------------------------------------------------
+       1. 초기 상태 (기본 색상)
+    -------------------------------------------------- */
+    #scaleXY { background-color: blue; }     /* 파랑 박스 */
+    #scaleX  { background-color: green; }    /* 초록 박스 */
+    #scaleY  { background-color: red; }      /* 빨강 박스 */
+
+    /* --------------------------------------------------
+       2. 마우스를 container 위에 올렸을 때 변화되는 모습 (Hover)
+       - 오른쪽으로 300px 이동 (translateX)
+       - 지정된 scale 형태로 크기 변경
+       - 배경색 변경 (노란색/보라색/주황색)
+    -------------------------------------------------- */
+    .container:hover #scaleXY {
+      transform: translateX(300px) scale(0.5, 0.5); /* 50% 축소 + 이동 */
+      background-color: #f39c12;                     /* 주황색으로 변경 */
+    }
+
+    .container:hover #scaleX {
+      transform: translateX(300px) scaleX(1.5);     /* 가로 150% 확대 + 이동 */
+      background-color: #9b59b6;                     /* 보라색으로 변경 */
+    }
+
+    .container:hover #scaleY {
+      transform: translateX(300px) scaleY(1.5);     /* 세로 150% 확대 + 이동 */
+      background-color: #16a085;                     /* 청록색으로 변경 */
+    }
+
+    /* --------------------------------------------------
+       3. timing-function 별 이동 속도 설정
+    -------------------------------------------------- */
+    .linear     { transition-timing-function: linear; }       /* 일정 속도 */
+    .ease-in    { transition-timing-function: ease-in; }      /* 느리게 → 빠르게 */
+    .ease-out   { transition-timing-function: ease-out; }     /* 빠르게 → 느리게 */
+
+  </style>
+</head>
+<body>
+
+  <h2>Transform scale() + Transition 애니메이션</h2>
+  <p>회색 박스 영역 위에 마우스를 올리면 박스가 <strong>색상을 바꾸면서 지정된 속도와 크기로 이동</strong>합니다.</p>
+
+  <div class="container">
+    <!-- 1. 일정한 속도로 이동하며 가로·세로 50% 축소 -->
+    <div id="scaleXY" class="box linear">
+      scale(0.5, 0.5) [linear]
+    </div>
+
+    <!-- 2. 느리게 시작해 빠르게 이동하며 가로 150% 확대 -->
+    <div id="scaleX" class="box ease-in">
+      scaleX(1.5) [ease-in]
+    </div>
+
+    <!-- 3. 빠르게 시작해 느리게 멈추며 세로 150% 확대 -->
+    <div id="scaleY" class="box ease-out">
+      scaleY(1.5) [ease-out]
+    </div>
+  </div>
+
+</body>
+</html>
