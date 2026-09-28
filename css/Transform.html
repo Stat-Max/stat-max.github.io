@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>예제7-1 translate 및 2D 변형 요약</title>
+    <!-- 외부 CSS 파일 연결 -->
+    <link type="text/css" rel="stylesheet" href="css/color.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* 핵심 요약 박스 스타일 */
+        .summary-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid #007bff;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .summary-box ul {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+
+        .summary-box li {
+            margin-bottom: 5px;
+        }
+
+        /* 각 예제 설명 텍스트 스타일 */
+        .desc {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        /* 공통 박스 스타일 및 간격 조절을 위한 wrapper */
+        .box-container {
+            margin-bottom: 40px;
+        }
+
+        /* translate(X, Y): X축과 Y축으로 동시에 이동 */
+        div#trnsXY {
+            width: 150px;
+            height: 80px;
+            background-color: red;              /* 빨강 박스 */
+            transform: translate(100px, 200px); /* 오른쪽 100px, 아래쪽 200px 이동 */
+        }
+
+        /* translateX(): X축으로만 이동 */
+        div#trnsX {
+            width: 150px;
+            height: 80px;
+            background-color: green;            /* 초록 박스 */
+            transform: translateX(150px);       /* 오른쪽으로 150px 이동 */
+        }
+
+        /* translateY(): Y축으로만 이동 */
+        div#trnsY {
+            width: 150px;
+            height: 80px;
+            background-color: blue;             /* 파랑 박스 */
+            transform: translateY(-50px);       /* 위쪽으로 50px 이동 (음수 값) */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CSS Transform(2D 변형) 핵심 요약 화면 표시 -->
+    <section class="summary-box">
+        <h2>📌 CSS Transform (2D 변형) 핵심 요약</h2>
+        <p><strong>transform:</strong> HTML 요소에 2D/3D 변형 적용 (이동, 회전, 확대/축소, 기울이기 가능)</p>
+        <p><strong>transform-origin:</strong> 변형의 기준점(중심) 설정</p>
+        
+        <h3>주요 메소드</h3>
+        <ul>
+            <li><code>translate(x, y)</code> : x, y축 이동</li>
+            <li><code>translateX(n)</code> : x축 이동</li>
+            <li><code>translateY(n)</code> : y축 이동</li>
+            <li><code>scale(x, y)</code> : 크기 확대/축소</li>
+            <li><code>scaleX(n)</code> : x축 크기 변경</li>
+            <li><code>scaleY(n)</code> : y축 크기 변경</li>
+            <li><code>rotate(angle)</code> : 지정 각도만큼 회전</li>
+            <li><code>skew(x, y)</code> : x, y축 기울이기</li>
+            <li><code>skewX(angle)</code> : x축 기울이기</li>
+            <li><code>skewY(angle)</code> : y축 기울이기</li>
+            <li><code>matrix(...)</code> : 행렬을 이용한 복합 변형</li>
+        </ul>
+    </section>
+
+    <h1>Transform - translate() 예제</h1>
+
+    <!-- X축 100px, Y축 200px 이동 -->
+    <div class="box-container">
+        <div class="desc">1. translate(100px, 200px) : 오른쪽 100px, 아래쪽 200px 이동</div>
+        <div id="trnsXY">translate(100px, 200px)</div>
+    </div>
+    <br><br><br><br><br> <!-- transform으로 인해 겹치는 레이아웃 여유 공간 확보 -->
+
+    <!-- X축 150px 이동 -->
+    <div class="box-container">
+        <div class="desc">2. translateX(150px) : 오른쪽으로 150px 이동</div>
+        <div id="trnsX">translateX(150px)</div>
+    </div>
+    <br>
+
+    <!-- Y축 -50px 이동 -->
+    <div class="box-container">
+        <div class="desc">3. translateY(-50px) : 위쪽으로 50px 이동 (음수 값)</div>
+        <div id="trnsY">translateY(-50px)</div>
+    </div>
+
+</body>
+</html>
