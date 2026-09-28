@@ -2,52 +2,53 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>자바스크립트 연산자 출력 (설명 추가)</title>
+    <title>예제8-6 출력문 (설명 추가)</title>
+    <style>
+        .desc {
+            color: #666;
+            font-size: 0.9em;
+            margin-left: 8px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #444;
+        }
+    </style>
 </head>
 <body>
-    <h1>두 숫자의 연산자별 계산 결과</h1>
-    <label>첫 번째 숫자: <input type="number" id="num1" value="17"></label><br><br>
-    <label>두 번째 숫자: <input type="number" id="num2" value="3"></label><br><br>
-    <button onclick="calculate()">연산 실행</button>
-    <hr>
-    <div id="output">
-        <!-- 연산 결과가 HTML 본문에 표시되는 영역 -->
-    </div>
+    <h1>JavaScript Output</h1>
+
+    <!-- 1. innerHTML 출력 영역 + 설명 -->
+    <p>
+        <span id="output">outPut2:innerHTML</span>
+        <span class="desc">&rarr; innerHTML: 지정한 HTML 요소(id="output") 내부에 내용을 삽입하여 출력합니다.</span>
+    </p>
 
     <script>
-        function calculate() {
-            // 1. 입력값 가져오기 (숫자 타입 변환)
-            var n1 = Number(document.getElementById("num1").value);
-            var n2 = Number(document.getElementById("num2").value);
+        // 2. document.write 출력 + 설명
+        document.write("outPut1:write <span class='desc'>&rarr; document.write(): HTML 문서의 스크립트 위치에 직접 문자열을 출력합니다.</span><br><br>"); 
 
-            // 2. 종류별 연산 결과 및 설명 구성
-            var resultHTML = 
-                "<h2>1. 기본 사칙연산자</h2>" +
-                "<ul>" +
-                    "<li><b>덧셈 (+) :</b> " + (n1 + n2) + " <span style='color: #666;'>&rarr; 두 수의 합 (" + n1 + " + " + n2 + ")</span></li>" +
-                    "<li><b>뺄셈 (-) :</b> " + (n1 - n2) + " <span style='color: #666;'>&rarr; 첫 번째 수에서 두 번째 수를 뺀 값 (" + n1 + " - " + n2 + ")</span></li>" +
-                    "<li><b>곱셈 (*) :</b> " + (n1 * n2) + " <span style='color: #666;'>&rarr; 두 수의 곱 (" + n1 + " &times; " + n2 + ")</span></li>" +
-                    "<li><b>나눗셈 (/) :</b> " + (n1 / n2) + " <span style='color: #666;'>&rarr; 소수점까지 포함한 나누기 결과 (" + n1 + " &divide; " + n2 + ")</span></li>" +
-                "</ul>" +
+        // 3. innerHTML 내용 지정 (위의 p 태그 내부로 들어감)
+        document.getElementById("output").innerHTML = "outPut2:innerHTML"; 
 
-                "<h2>2. 몫과 나머지 연산자</h2>" +
-                "<ul>" +
-                    "<li><b>정수 몫 (Math.floor) :</b> " + Math.floor(n1 / n2) + " <span style='color: #666;'>&rarr; 나눗셈 결과의 소수점을 내림하여 구한 정수 몫</span></li>" +
-                    "<li><b>나머지 (%) :</b> " + (n1 % n2) + " <span style='color: #666;'>&rarr; 나누고 남은 나머지값 (" + n1 + "을 " + n2 + "(으)로 나눈 나머지)</span></li>" +
-                "</ul>" +
+        // 4. window.alert 팝업 실행
+        window.alert("outPut3:alert"); 
 
-                "<h2>3. 기타 산술 연산자</h2>" +
-                "<ul>" +
-                    "<li><b>거듭제곱 (**) :</b> " + (n1 ** n2) + " <span style='color: #666;'>&rarr; " + n1 + "의 " + n2 + "제곱 (" + n1 + "<sup>" + n2 + "</sup>)</span></li>" +
-                    "<li><b>단항 부호 반전 (-) :</b> " + (-n1) + " <span style='color: #666;'>&rarr; 첫 번째 숫자의 부호를 반전 (" + n1 + " &rarr; " + (-n1) + ")</span></li>" +
-                "</ul>";
-
-            // 3. HTML 본문 내 div#output 영역에 출력
-            document.getElementById("output").innerHTML = resultHTML;
-        }
-
-        // 페이지 로드 시 초기 1회 자동으로 출력 실행
-        calculate();
+        // 5. console.log 출력
+        console.log("outPut4:console"); 
     </script>
+
+    <!-- 3 & 4. 화면상에 보이지 않는 alert와 console.log에 대한 안내 -->
+    <div class="info-box">
+        <p>💡 <b>화면에 바로 보이지 않는 출력 방식 안내:</b></p>
+        <ul>
+            <li><b>outPut3:alert</b> &rarr; 페이지 로드 시 팝업 창(경고창)으로 출력이 진행됩니다.</li>
+            <li><b>outPut4:console</b> &rarr; 브라우저 개발자 도구(F12)의 <b>[Console]</b> 탭에서 출력 결과를 확인할 수 있습니다.</li>
+        </ul>
+    </div>
 </body>
 </html>

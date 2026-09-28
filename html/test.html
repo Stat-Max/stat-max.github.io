@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT & Web Tech Master Guide</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --tech-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: var(--bg-color);
+            word-break: keep-all;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        section {
+            padding: 2.5rem 1.2rem;
+            border-bottom: 1px solid #ddd;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IT & Web Tech Comprehensive Guide 💻</h1>
+    </header>
+
+    <!-- 01. Web Development 스택 -->
+    <section id="web-tech">
+        <h2>01. Web Development Stack</h2>
+        <div class="card">
+            <p>현대 웹을 구성하는 핵심 기술 언어들의 독립적인 역할입니다.</p>
+            
+            <div style="margin-top: 15px;">
+                <strong><a href="html/htmlTag.html" target="_blank" style="color: var(--tech-color); text-decoration: none;">HTML: 웹의 구조와 의미 🔗</a></strong>
+                <div class="code-block">&lt;header&gt; 웹 페이지의 제목 &lt;/header&gt;</div>
+                
+                <strong><a href="css/cssList.html" target="_blank" style="color: var(--tech-color); text-decoration: none;">CSS: 디자인과 레이아웃 🔗</a></strong>
+                <div class="code-block">body { background-color: #f4f7f6; }</div>
+                
+                <!-- JavaScript 부분에 링크 추가 -->
+                <strong><a href="java/javalist.html" target="_blank" style="color: var(--tech-color); text-decoration: none;">JavaScript: 동적 기능과 상호작용 🔗</a></strong>
+                <div class="code-block">button.addEventListener('click', () => { alert('Hello!'); });</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02. IT 개론 기초 이론 -->
+    <section id="it-intro">
+        <h2>02. IT Fundamentals</h2>
+        <div class="card">
+            <p>정보 기술의 핵심이 되는 기본 개념 문서 정보입니다.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>💻 <strong>OS (운영체제):</strong> 하드웨어 자원을 효율적으로 관리하는 시스템 소프트웨어</li>
+                <li>🌐 <strong>Network:</strong> 컴퓨터 간의 데이터 교환을 위한 통신 프로토콜과 인프라</li>
+                <li>📊 <strong>Data Structure:</strong> 데이터를 효율적으로 저장하고 관리하는 추상적인 형태</li>
+                <li>🛡️ <strong>Security:</strong> 정보의 기밀성, 무결성, 가용성을 보호하는 기술</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 03. AI 비주얼 자동 생성 -->
+    <section id="ai-visual">
+        <h2>03. Automated AI Visuals</h2>
+        <div class="card">
+            <p>본 사이트의 테마를 기반으로 AI가 자동 생성한 이미지입니다.</p>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tech Background" class="img-placeholder">
+            <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 5px;">[AI Generated: High-Tech Infrastructure View]</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 IT & Web Tech Blog. 모든 정보는 최신 트렌드를 반영합니다.</p>
+    </footer>
+
+</body>
+</html>
