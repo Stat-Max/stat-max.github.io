@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript 함수 통합 예제</title>
+
+    <script>
+        // 예제 8-10: 이벤트 함수
+        function jsFunction() {
+            alert("눌렀군요!");
+            document.getElementById("first").innerHTML = "first";
+            document.getElementById("second").innerHTML = "second";
+        }
+
+        // 예제 8-11: 두 정수의 덧셈 계산
+        function calc() {
+            var x = document.getElementById("x").value;
+            var y = document.getElementById("y").value;
+
+            var tot = parseInt(x) + parseInt(y);
+
+            document.getElementById("sum").value = tot;
+        }
+
+        // 예제 8-12: prompt 함수
+        function promptMsg() {
+            prompt("무엇이든지 물어보세요?", "질문은 여기에");
+        }
+
+        // 예제 8-12: confirm 함수
+        function confirmMsg() {
+            var result = confirm("계속 진행할까요?");
+
+            if (result) {
+                alert("계속 진행합니다.");
+            } else {
+                alert("작업을 취소했습니다.");
+            }
+        }
+
+        // 예제 8-12: alert 함수
+        function alertMsg() {
+            alert("실행할까요?");
+        }
+    </script>
+</head>
+
+<body>
+    <h1>JavaScript 함수 통합 예제</h1>
+
+    <hr>
+
+    <h2>1. 이벤트 함수</h2>
+    <button onclick="jsFunction()">눌러주세요</button>
+    <p id="first"></p>
+    <p id="second"></p>
+
+    <hr>
+
+    <h2>2. 두 정수의 덧셈 계산</h2>
+    <form onsubmit="return false;">
+        정수 입력1:
+        <input type="number" id="x"><br><br>
+
+        정수 입력2:
+        <input type="number" id="y"><br><br>
+
+        <input type="button" value="확인" onclick="calc()">
+        <br><br>
+
+        합계:
+        <input type="text" id="sum" readonly>
+    </form>
+
+    <hr>
+
+    <h2>3. 내장 함수</h2>
+    <p>버튼을 누르면 각 함수의 창이 나타납니다.</p>
+
+    <input type="button" value="prompt" onclick="promptMsg()">
+    <input type="button" value="confirm" onclick="confirmMsg()">
+    <input type="button" value="alert" onclick="alertMsg()">
+
+</body>
+</html>

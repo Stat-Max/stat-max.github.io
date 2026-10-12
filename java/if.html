@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JavaScript 조건문과 반복문</title>
+</head>
+<body>
+	<h1>JavaScript 조건문과 반복문</h1>
+
+	<h2>1. if else</h2>
+	<p>조건이 참이면 <code>if</code>, 거짓이면 <code>else</code> 블록을 실행합니다.</p>
+	<pre><code>if (score &gt;= 60) {
+	result = "합격";
+} else {
+	result = "불합격";
+}</code></pre>
+	<label>점수: <input type="number" id="score" value="75"></label>
+	<button type="button" onclick="checkScore()">결과 확인</button>
+	<p id="scoreResult"></p>
+
+	<hr>
+
+	<h2>2. else if</h2>
+	<p>여러 조건을 순서대로 검사할 때 사용합니다.</p>
+	<pre><code>if (score &gt;= 90) {
+	grade = "A";
+} else if (score &gt;= 80) {
+	grade = "B";
+} else {
+	grade = "C";
+}</code></pre>
+	<label>점수: <input type="number" id="gradeScore" value="85"></label>
+	<button type="button" onclick="checkGrade()">등급 확인</button>
+	<p id="gradeResult"></p>
+
+	<hr>
+
+	<h2>3. switch</h2>
+	<p>값이 여러 선택지 중 하나와 일치하는지 확인합니다. 각 경우 끝에는 <code>break</code>를 사용합니다.</p>
+	<pre><code>switch (day) {
+	case 1:
+		name = "월요일";
+		break;
+	case 2:
+		name = "화요일";
+		break;
+	default:
+		name = "해당 없음";
+}</code></pre>
+	<label>요일 번호(1~7): <input type="number" id="day" min="1" max="7" value="1"></label>
+	<button type="button" onclick="checkDay()">요일 확인</button>
+	<p id="dayResult"></p>
+
+	<hr>
+
+	<h2>4. for</h2>
+	<p>반복 횟수를 알고 있을 때 편리합니다. 아래 예제는 1부터 입력한 수까지 더합니다.</p>
+	<pre><code>for (var i = 1; i &lt;= number; i++) {
+	sum += i;
+}</code></pre>
+	<label>마지막 수: <input type="number" id="forNumber" min="1" max="100" value="5"></label>
+	<button type="button" onclick="runFor()">합계 계산</button>
+	<p id="forResult"></p>
+
+	<hr>
+
+	<h2>5. while</h2>
+	<p>조건이 참인 동안 반복합니다. 조건을 먼저 확인하므로 처음부터 거짓이면 한 번도 실행하지 않습니다.</p>
+	<pre><code>var i = 1;
+while (i &lt;= 5) {
+	output += i + " ";
+	i++;
+}</code></pre>
+	<button type="button" onclick="runWhile()">while 실행</button>
+	<p id="whileResult"></p>
+
+	<hr>
+
+	<h2>6. do while</h2>
+	<p>먼저 한 번 실행한 뒤 조건을 확인하므로, 조건과 관계없이 최소 한 번은 실행합니다.</p>
+	<pre><code>var i = 1;
+do {
+	output += i + " ";
+	i++;
+} while (i &lt;= 5);</code></pre>
+	<button type="button" onclick="runDoWhile()">do while 실행</button>
+	<p id="doWhileResult"></p>
+
+	<script>
+		function checkScore() {
+			var score = Number(document.getElementById("score").value);
+			var result = score >= 60 ? "합격입니다." : "불합격입니다.";
+			document.getElementById("scoreResult").textContent = result;
+		}
+
+		function checkGrade() {
+			var score = Number(document.getElementById("gradeScore").value);
+			var grade;
+
+			if (score >= 90) {
+				grade = "A";
+			} else if (score >= 80) {
+				grade = "B";
+			} else if (score >= 70) {
+				grade = "C";
+			} else {
+				grade = "D";
+			}
+
+			document.getElementById("gradeResult").textContent = "등급: " + grade;
+		}
+
+		function checkDay() {
+			var day = Number(document.getElementById("day").value);
+			var name;
+
+			switch (day) {
+				case 1:
+					name = "월요일";
+					break;
+				case 2:
+					name = "화요일";
+					break;
+				case 3:
+					name = "수요일";
+					break;
+				case 4:
+					name = "목요일";
+					break;
+				case 5:
+					name = "금요일";
+					break;
+				case 6:
+					name = "토요일";
+					break;
+				case 7:
+					name = "일요일";
+					break;
+				default:
+					name = "해당하는 요일이 없습니다.";
+			}
+
+			document.getElementById("dayResult").textContent = name;
+		}
+
+		function runFor() {
+			var number = Number(document.getElementById("forNumber").value);
+			var sum = 0;
+
+			for (var i = 1; i <= number; i++) {
+				sum += i;
+			}
+
+			document.getElementById("forResult").textContent = "합계: " + sum;
+		}
+
+		function runWhile() {
+			var i = 1;
+			var output = "";
+
+			while (i <= 5) {
+				output += i + " ";
+				i++;
+			}
+
+			document.getElementById("whileResult").textContent = output;
+		}
+
+		function runDoWhile() {
+			var i = 1;
+			var output = "";
+
+			do {
+				output += i + " ";
+				i++;
+			} while (i <= 5);
+
+			document.getElementById("doWhileResult").textContent = output;
+		}
+	</script>
+</body>
+</html>
