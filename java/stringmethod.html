@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript String 메서드 설명서</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #3264ff;
+      --secondary: #ff8d5c;
+      --dark: #1f2d3d;
+      --text: #2d3748;
+      --muted: #64748b;
+      --line: #dfe7f5;
+      --success: #2bb673;
+      --warning: #ffb74d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #223f99, #2f6cf5);
+      color: white;
+      padding: 2.5rem 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .intro, .method-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 10px 24px rgba(31, 68, 124, 0.06);
+    }
+
+    .intro {
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .intro h2 {
+      margin-top: 0;
+      color: var(--dark);
+      font-size: 1.8rem;
+    }
+
+    .concept {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .box {
+      min-width: 140px;
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      font-weight: bold;
+      text-align: center;
+      background: #edf4ff;
+      border: 2px solid #a8c3ff;
+    }
+
+    .box.orange {
+      background: #fff4eb;
+      border-color: #ffb98d;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .method-card {
+      padding: 1.3rem;
+    }
+
+    .method-card h3 {
+      margin: 0 0 0.5rem;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .method-card p {
+      margin: 0.5rem 0 0.8rem;
+      color: var(--muted);
+    }
+
+    .demo {
+      background: #f8faff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.8rem;
+      font-size: 0.95rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .demo strong {
+      color: var(--dark);
+    }
+
+    .result {
+      display: inline-block;
+      background: #eaf7ff;
+      border-radius: 8px;
+      padding: 0.18rem 0.45rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    svg {
+      width: 100%;
+      height: 120px;
+      display: block;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #f9fbff 0%, #eef4ff 100%);
+      border: 1px solid var(--line);
+    }
+
+    .path {
+      fill: none;
+      stroke: #8cabff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 8 8;
+    }
+
+    .path.orange {
+      stroke: #ffb07c;
+    }
+
+    .path.green {
+      stroke: #5cc991;
+    }
+
+    .moving-dot {
+      fill: var(--secondary);
+    }
+
+    .moving-dot.green {
+      fill: var(--success);
+    }
+
+    .moving-dot.blue {
+      fill: var(--primary);
+    }
+
+    .tip {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-left: 5px solid var(--secondary);
+      background: #fff8f3;
+      border-radius: 10px;
+      color: var(--dark);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem 1rem 3rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding-left: 0.7rem; padding-right: 0.7rem; }
+      .box { min-width: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>JavaScript String 메서드 설명서</h1>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>문자열은 글자들의 연속된 데이터</h2>
+      <p>
+        JavaScript에서 문자열은 단순히 텍스트가 아니라, 각 글자가 인덱스 번호를 가지는 객체처럼 다룰 수 있습니다.
+        그래서 글자 하나를 꺼내거나, 위치를 찾거나, 일부를 자르거나, 대문자로 바꾸는 다양한 메서드를 사용할 수 있습니다.
+      </p>
+
+      <div class="concept">
+        <div class="box">"hello"</div>
+        <div class="arrow">→</div>
+        <div class="box orange">문자열 객체</div>
+        <div class="arrow">→</div>
+        <div class="box">h e l l o</div>
+      </div>
+
+      <div class="tip">
+        문자열의 각 문자는 인덱스 번호를 갖습니다. 예를 들어 "hello"에서 첫 글자는 0번, 두 번째 글자는 1번입니다.
+      </div>
+    </section>
+
+    <section>
+      <h2>1. String 기본 속성</h2>
+      <div class="method-grid">
+        <article class="method-card">
+          <h3>length</h3>
+          <p>문자열의 글자 수를 알려줍니다.</p>
+          <div class="demo"><strong>예시:</strong> "JavaScript" → <span class="result" id="lenResult">0</span></div>
+          <svg viewBox="0 0 260 120" aria-label="length animation">
+            <path class="path" d="M20 80 C 60 30, 110 30, 145 80 S 220 120, 240 80"/>
+            <circle class="moving-dot blue" r="6">
+              <animateMotion dur="2.8s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#lineLen"></mpath>
+              </animateMotion>
+            </circle>
+            <path id="lineLen" d="M20 80 C 60 30, 110 30, 145 80 S 220 120, 240 80" fill="none" visibility="hidden"/>
+          </svg>
+        </article>
+
+        <article class="method-card">
+          <h3>prototype</h3>
+          <p>새 객체에 공통으로 사용할 기능을 추가할 때 쓰입니다.</p>
+          <div class="demo"><strong>예시:</strong> 사용자 객체에 age 추가 → <span class="result" id="protoResult">0</span></div>
+          <svg viewBox="0 0 260 120" aria-label="prototype animation">
+            <path class="path orange" d="M20 70 C 70 20, 120 20, 170 70 S 220 110, 240 70"/>
+            <circle class="moving-dot" r="6">
+              <animateMotion dur="2.6s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#lineProto"></mpath>
+              </animateMotion>
+            </circle>
+            <path id="lineProto" d="M20 70 C 70 20, 120 20, 170 70 S 220 110, 240 70" fill="none" visibility="hidden"/>
+          </svg>
+        </article>
+
+        <article class="method-card">
+          <h3>constructor</h3>
+          <p>어떤 생성자 함수로 만들어졌는지를 알려줍니다.</p>
+          <div class="demo"><strong>예시:</strong> 객체 생성자 확인 → <span class="result" id="ctorResult">...</span></div>
+          <svg viewBox="0 0 260 120" aria-label="constructor animation">
+            <path class="path green" d="M20 90 C 80 30, 130 30, 185 90 S 220 100, 240 60"/>
+            <circle class="moving-dot green" r="6">
+              <animateMotion dur="2.9s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#lineCtor"></mpath>
+              </animateMotion>
+            </circle>
+            <path id="lineCtor" d="M20 90 C 80 30, 130 30, 185 90 S 220 100, 240 60" fill="none" visibility="hidden"/>
+          </svg>
+        </article>
+      </div>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>2. 문자열 메서드 사용법</h2>
+      <div class="method-grid">
+        <article class="method-card">
+          <h3>charAt(index)</h3>
+          <p>특정 위치의 문자를 한 글자만 꺼내옵니다.</p>
+          <div class="demo"><strong>예시:</strong> "hello".charAt(0) → <span class="result" id="charAtResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path" d="M20 70 L 240 70"/><circle class="moving-dot blue" r="6"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#charAtLine"></mpath></animateMotion></circle><path id="charAtLine" d="M20 70 L 240 70" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>charCodeAt(index)</h3>
+          <p>문자의 유니코드 값을 숫자로 반환합니다.</p>
+          <div class="demo"><strong>예시:</strong> "A".charCodeAt(0) → <span class="result" id="charCodeResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path orange" d="M20 90 C 90 20, 170 20, 240 90"/><circle class="moving-dot" r="6"><animateMotion dur="2.5s" repeatCount="indefinite"><mpath href="#charCodeLine"></mpath></animateMotion></circle><path id="charCodeLine" d="M20 90 C 90 20, 170 20, 240 90" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>concat(str)</h3>
+          <p>문자열을 이어 붙입니다.</p>
+          <div class="demo"><strong>예시:</strong> "Java" + "Script" → <span class="result" id="concatResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path green" d="M20 60 L 100 60 L 100 30 L 240 30"/><circle class="moving-dot green" r="6"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#concatLine"></mpath></animateMotion></circle><path id="concatLine" d="M20 60 L 100 60 L 100 30 L 240 30" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>indexOf(문자)</h3>
+          <p>문자가 시작되는 위치를 왼쪽에서부터 찾습니다.</p>
+          <div class="demo"><strong>예시:</strong> "AI Software".indexOf("AI") → <span class="result" id="indexOfResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path" d="M20 80 L 80 80 L 80 30 L 150 30 L 150 80 L 240 80"/><circle class="moving-dot blue" r="6"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#indexLine"></mpath></animateMotion></circle><path id="indexLine" d="M20 80 L 80 80 L 80 30 L 150 30 L 150 80 L 240 80" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>lastIndexOf(문자)</h3>
+          <p>문자가 마지막으로 등장하는 위치를 찾습니다.</p>
+          <div class="demo"><strong>예시:</strong> "to to to".lastIndexOf("to") → <span class="result" id="lastIndexOfResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path orange" d="M20 30 L 100 30 L 100 80 L 160 80 L 160 40 L 240 40"/><circle class="moving-dot" r="6"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#lastIndexLine"></mpath></animateMotion></circle><path id="lastIndexLine" d="M20 30 L 100 30 L 100 80 L 160 80 L 160 40 L 240 40" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>replace(기존, 새값)</h3>
+          <p>일부 문자를 다른 문자로 바꿉니다.</p>
+          <div class="demo"><strong>예시:</strong> "hello" → "Good Bye" → <span class="result" id="replaceResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path green" d="M20 80 C 80 10, 150 10, 220 80"/><circle class="moving-dot green" r="6"><animateMotion dur="2.5s" repeatCount="indefinite"><mpath href="#replaceLine"></mpath></animateMotion></circle><path id="replaceLine" d="M20 80 C 80 10, 150 10, 220 80" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>match(규칙)</h3>
+          <p>문자열에서 조건에 맞는 문자를 찾는 데 사용합니다.</p>
+          <div class="demo"><strong>예시:</strong> "AI Software".match(/AI/) → <span class="result" id="matchResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path" d="M20 60 C 90 20, 150 20, 240 60"/><circle class="moving-dot blue" r="6"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#matchLine"></mpath></animateMotion></circle><path id="matchLine" d="M20 60 C 90 20, 150 20, 240 60" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>search(문자)</h3>
+          <p>문자가 어디에 있는지 위치 번호를 찾습니다.</p>
+          <div class="demo"><strong>예시:</strong> "Hello, AI".search("AI") → <span class="result" id="searchResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path orange" d="M20 90 L 80 30 L 160 30 L 240 90"/><circle class="moving-dot" r="6"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#searchLine"></mpath></animateMotion></circle><path id="searchLine" d="M20 90 L 80 30 L 160 30 L 240 90" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>slice(start, end)</h3>
+          <p>문자열의 원하는 구간을 잘라서 새로운 문자열을 반환합니다.</p>
+          <div class="demo"><strong>예시:</strong> "Software".slice(2, 6) → <span class="result" id="sliceResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path green" d="M20 70 L 240 70"/><circle class="moving-dot green" r="6"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#sliceLine"></mpath></animateMotion></circle><path id="sliceLine" d="M20 70 L 240 70" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>split(구분자)</h3>
+          <p>문자열을 구분 기준으로 나누어 배열로 만듭니다.</p>
+          <div class="demo"><strong>예시:</strong> "A,B,C".split(",") → <span class="result" id="splitResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path" d="M20 80 C 70 20, 120 20, 170 80 C 200 110, 220 110, 240 80"/><circle class="moving-dot blue" r="6"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#splitLine"></mpath></animateMotion></circle><path id="splitLine" d="M20 80 C 70 20, 120 20, 170 80 C 200 110, 220 110, 240 80" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>toUpperCase()</h3>
+          <p>영문자를 모두 대문자로 바꿉니다.</p>
+          <div class="demo"><strong>예시:</strong> "hello".toUpperCase() → <span class="result" id="upperResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path orange" d="M20 40 C 80 100, 180 100, 240 40"/><circle class="moving-dot" r="6"><animateMotion dur="2.3s" repeatCount="indefinite"><mpath href="#upperLine"></mpath></animateMotion></circle><path id="upperLine" d="M20 40 C 80 100, 180 100, 240 40" fill="none" visibility="hidden"/></svg>
+        </article>
+
+        <article class="method-card">
+          <h3>toString()</h3>
+          <p>숫자나 객체를 문자열로 바꿉니다.</p>
+          <div class="demo"><strong>예시:</strong> 5678.toString() → <span class="result" id="toStringResult">-</span></div>
+          <svg viewBox="0 0 260 120"><path class="path green" d="M20 70 L 90 70 L 120 30 L 170 30 L 170 90 L 240 90"/><circle class="moving-dot green" r="6"><animateMotion dur="2.7s" repeatCount="indefinite"><mpath href="#toStringLine"></mpath></animateMotion></circle><path id="toStringLine" d="M20 70 L 90 70 L 120 30 L 170 30 L 170 90 L 240 90" fill="none" visibility="hidden"/></svg>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    JavaScript String 메서드 학습용 설명 페이지
+  </footer>
+
+  <script>
+    const sample = "hello, welcome to AI Software!!";
+    const sample2 = "Hello, AI, Software";
+
+    document.getElementById("lenResult").textContent = "JavaScript".length;
+    function Person(name) { this.name = name; }
+    Person.prototype.age = 25;
+    const p = new Person("Kim");
+    document.getElementById("protoResult").textContent = p.age;
+    document.getElementById("ctorResult").textContent = p.constructor.name;
+
+    document.getElementById("charAtResult").textContent = "hello".charAt(0);
+    document.getElementById("charCodeResult").textContent = "A".charCodeAt(0);
+    document.getElementById("concatResult").textContent = "Java".concat("Script");
+    document.getElementById("indexOfResult").textContent = sample2.indexOf("AI");
+    document.getElementById("lastIndexOfResult").textContent = "to to to".lastIndexOf("to");
+    document.getElementById("replaceResult").textContent = sample.replace("hello", "Good Bye");
+    document.getElementById("matchResult").textContent = sample2.match(/AI/)[0];
+    document.getElementById("searchResult").textContent = sample2.search("AI");
+    document.getElementById("sliceResult").textContent = "Software".slice(2, 6);
+    document.getElementById("splitResult").textContent = "A,B,C".split(",").join(" | ");
+    document.getElementById("upperResult").textContent = "hello".toUpperCase();
+    document.getElementById("toStringResult").textContent = String(5678);
+  </script>
+</body>
+</html>
