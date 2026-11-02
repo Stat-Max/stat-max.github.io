@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math 객체 메소드1 시각화</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --primary: #2d6cdf;
+      --primary-soft: #dfeaff;
+      --accent: #ff9f43;
+      --text: #1f2937;
+      --muted: #667085;
+      --line: #dfe7f5;
+      --shadow: rgba(29, 78, 216, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+      background: linear-gradient(180deg, #eef5ff 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 18px 48px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--primary);
+    }
+
+    .header p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      box-shadow: 0 10px 22px var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 1.15rem;
+    }
+
+    .desc {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      min-height: 52px;
+    }
+
+    .formula {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 0.84rem;
+    }
+
+    svg {
+      width: 100%;
+      height: 190px;
+      background: linear-gradient(180deg, #f9fbff 0%, #eef6ff 100%);
+      border-radius: 12px;
+      border: 1px solid #e7eefb;
+      display: block;
+    }
+
+    .axis {
+      stroke: #9aa9c2;
+      stroke-width: 1;
+    }
+
+    .grid-line {
+      stroke: #e5ebf5;
+      stroke-width: 0.8;
+    }
+
+    .graph-line {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .graph-point {
+      fill: var(--accent);
+      stroke: #fff;
+      stroke-width: 2;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #f4f8ff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #e4ecff;
+    }
+
+    .result b {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Math 객체 메소드 1</h1>
+      <p>각 함수는 숫자를 변환하거나 방향을 계산하는 역할을 합니다. 그래프 위를 점이 움직이며 개념을 더 쉽게 이해할 수 있습니다.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>abs(x)</h3>
+        <p class="desc">음수를 양수로 바꾸어 크기만 비교할 때 사용합니다.</p>
+        <div class="formula">Math.abs(x)</div>
+        <svg id="svg-abs" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="ca">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>acos(x)</h3>
+        <p class="desc">x의 아크코사인을 계산해 각도를 구합니다. x는 -1~1 사이여야 합니다.</p>
+        <div class="formula">Math.acos(x)</div>
+        <svg id="svg-acos" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="cca">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>acosh(x)</h3>
+        <p class="desc">x의 하이퍼볼릭 아크코사인으로, x가 1 이상일 때 의미가 있습니다.</p>
+        <div class="formula">Math.acosh(x)</div>
+        <svg id="svg-acosh" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="cnct">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>asin(x)</h3>
+        <p class="desc">x의 아크사인을 계산해 각도를 찾습니다. 범위는 -1부터 1입니다.</p>
+        <div class="formula">Math.asin(x)</div>
+        <svg id="svg-asin" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="ido">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>asinh(x)</h3>
+        <p class="desc">역쌍곡선 사인으로, 입력값을 각도로 바꾸는 함수입니다.</p>
+        <div class="formula">Math.asinh(x)</div>
+        <svg id="svg-asinh" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="vlf">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>atan(x)</h3>
+        <p class="desc">입력값의 각도를 계산하며, 값이 커질수록 90°에 가까워집니다.</p>
+        <div class="formula">Math.atan(x)</div>
+        <svg id="svg-atan" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="fxd">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>atan2(y, x)</h3>
+        <p class="desc">점의 방향을 계산할 때 쓰며, x와 y의 상대 위치로 각도를 구합니다.</p>
+        <div class="formula">Math.atan2(y, x)</div>
+        <svg id="svg-atan2" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="prc">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>cbrt(x)</h3>
+        <p class="desc">세제곱근을 구합니다. 음수도 자연스럽게 계산할 수 있습니다.</p>
+        <div class="formula">Math.cbrt(x)</div>
+        <svg id="svg-cbrt" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="exp">0</b></div>
+      </div>
+
+      <div class="card">
+        <h3>ceil(x)</h3>
+        <p class="desc">소수점이 있으면 올림해 정수로 만들고, 큰 값으로 이동합니다.</p>
+        <div class="formula">Math.ceil(x)</div>
+        <svg id="svg-ceil" viewBox="0 0 220 170"></svg>
+        <div class="result">결과: <b id="str">0</b></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const graphs = [
+      {
+        id: 'abs',
+        fn: x => Math.abs(x),
+        xMin: -4,
+        xMax: 4,
+        yMin: 0,
+        yMax: 4,
+        step: 0.05,
+        text: 'ca'
+      },
+      {
+        id: 'acos',
+        fn: x => Math.acos(x),
+        xMin: -1,
+        xMax: 1,
+        yMin: 0,
+        yMax: Math.PI + 0.3,
+        step: 0.01,
+        text: 'cca'
+      },
+      {
+        id: 'acosh',
+        fn: x => Math.acosh(x),
+        xMin: 1,
+        xMax: 5,
+        yMin: 0,
+        yMax: 2.5,
+        step: 0.02,
+        text: 'cnct'
+      },
+      {
+        id: 'asin',
+        fn: x => Math.asin(x),
+        xMin: -1,
+        xMax: 1,
+        yMin: -1.8,
+        yMax: 1.8,
+        step: 0.01,
+        text: 'ido'
+      },
+      {
+        id: 'asinh',
+        fn: x => Math.asinh(x),
+        xMin: -4,
+        xMax: 4,
+        yMin: -2.5,
+        yMax: 2.5,
+        step: 0.04,
+        text: 'vlf'
+      },
+      {
+        id: 'atan',
+        fn: x => Math.atan(x),
+        xMin: -4,
+        xMax: 4,
+        yMin: -1.8,
+        yMax: 1.8,
+        step: 0.04,
+        text: 'fxd'
+      },
+      {
+        id: 'atan2',
+        fn: x => Math.atan2(1.2, x),
+        xMin: -4,
+        xMax: 4,
+        yMin: 0,
+        yMax: Math.PI + 0.3,
+        step: 0.04,
+        text: 'prc'
+      },
+      {
+        id: 'cbrt',
+        fn: x => Math.cbrt(x),
+        xMin: -4,
+        xMax: 4,
+        yMin: -2.5,
+        yMax: 2.5,
+        step: 0.05,
+        text: 'exp'
+      },
+      {
+        id: 'ceil',
+        fn: x => Math.ceil(x),
+        xMin: -2,
+        xMax: 4,
+        yMin: -1,
+        yMax: 5,
+        step: 0.1,
+        text: 'str'
+      }
+    ];
+
+    function buildPath(graph) {
+      const svg = document.getElementById('svg-' + graph.id);
+      const width = 220;
+      const height = 170;
+      const pad = 18;
+      const innerW = width - pad * 2;
+      const innerH = height - pad * 2;
+
+      const axisX = pad + innerW * 0.5;
+      const axisY = pad + innerH * 0.5;
+
+      const lines = [];
+      for (let i = 0; i <= 40; i++) {
+        const x = pad + (innerW / 40) * i;
+        lines.push(`<line class="grid-line" x1="${x}" y1="${pad}" x2="${x}" y2="${height - pad}" />`);
+      }
+      for (let i = 0; i <= 30; i++) {
+        const y = pad + (innerH / 30) * i;
+        lines.push(`<line class="grid-line" x1="${pad}" y1="${y}" x2="${width - pad}" y2="${y}" />`);
+      }
+
+      svg.innerHTML = `
+        <line class="axis" x1="${pad}" y1="${height/2}" x2="${width - pad}" y2="${height/2}" />
+        <line class="axis" x1="${width/2}" y1="${pad}" x2="${width/2}" y2="${height - pad}" />
+        ${lines.join('')}
+      `;
+
+      let d = '';
+      for (let i = 0; i <= 180; i++) {
+        const t = i / 180;
+        const x = graph.xMin + (graph.xMax - graph.xMin) * t;
+        const y = graph.fn(x);
+
+        const px = pad + ((x - graph.xMin) / (graph.xMax - graph.xMin)) * innerW;
+        const py = height - pad - ((y - graph.yMin) / (graph.yMax - graph.yMin)) * innerH;
+
+        d += (i === 0 ? 'M' : 'L') + px.toFixed(2) + ' ' + py.toFixed(2) + ' ';
+      }
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', 'graph-line');
+      path.setAttribute('d', d.trim());
+      svg.appendChild(path);
+
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('class', 'graph-point');
+      dot.setAttribute('r', '5');
+      svg.appendChild(dot);
+
+      return { svg, path, dot, graph, pad, width, height, innerW, innerH };
+    }
+
+    function animateGraph(info) {
+      const { path, dot, graph, pad, width, height, innerW, innerH } = info;
+      const total = 180;
+
+      function update(step) {
+        const t = (step % total) / total;
+        const x = graph.xMin + (graph.xMax - graph.xMin) * t;
+        const y = graph.fn(x);
+        const px = pad + ((x - graph.xMin) / (graph.xMax - graph.xMin)) * innerW;
+        const py = height - pad - ((y - graph.yMin) / (graph.yMax - graph.yMin)) * innerH;
+
+        dot.setAttribute('cx', px);
+        dot.setAttribute('cy', py);
+
+        const resultEl = document.getElementById(graph.text);
+        if (resultEl) {
+          resultEl.textContent = Number(y).toFixed(3);
+        }
+      }
+
+      let start = null;
+      function tick(ts) {
+        if (!start) start = ts;
+        const elapsed = ts - start;
+        update(elapsed / 20);
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    const chartInfos = graphs.map(buildPath);
+    chartInfos.forEach(animateGraph);
+
+    const initialValues = {
+      ca: Math.abs(1),
+      cca: Math.acos(1),
+      cnct: Math.acosh(1),
+      ido: Math.asin(1),
+      vlf: Math.asinh(1),
+      fxd: Math.atan(1),
+      prc: Math.atan2(3, 1),
+      exp: Math.cbrt(1),
+      str: Math.ceil(1)
+    };
+
+    Object.entries(initialValues).forEach(([key, value]) => {
+      const el = document.getElementById(key);
+      if (el) el.textContent = Number(value).toFixed(3);
+    });
+  </script>
+</body>
+</html>

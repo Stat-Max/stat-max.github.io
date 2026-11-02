@@ -1,0 +1,483 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git 사용설명서</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #2f6fed;
+      --dark: #1f2a37;
+      --accent: #ff8a3d;
+      --text: #2d3748;
+      --muted: #718096;
+      --line: #e2e8f0;
+      --code: #1f2937;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #203a8d, #1d4ed8);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3rem);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 18px rgba(31, 42, 55, 0.05);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--dark);
+      border-left: 6px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      color: var(--primary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.7rem;
+    }
+
+    p, li {
+      font-size: 1rem;
+    }
+
+    .code {
+      background: var(--code);
+      color: #e5edf9;
+      padding: 1rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: Consolas, monospace;
+      font-size: 0.92rem;
+      margin: 0.8rem 0;
+      white-space: pre-wrap;
+    }
+
+    ul {
+      padding-left: 1.3rem;
+    }
+
+    .tip {
+      background: #eef6ff;
+      border-left: 5px solid var(--primary);
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      margin-top: 0.7rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(47, 111, 237, 0.1);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      font-weight: bold;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .visual-section {
+      background: linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .diagram-card {
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .diagram-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+    }
+
+    .flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .repo-box {
+      width: 100%;
+      background: #eaf2ff;
+      border: 2px solid #94b9ff;
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      text-align: center;
+      font-weight: bold;
+      color: var(--dark);
+    }
+
+    .repo-box.accent {
+      background: #fff3e8;
+      border-color: #ffba77;
+    }
+
+    .repo-box.primary {
+      background: #e9f7ef;
+      border-color: #7bc99f;
+    }
+
+    .branch-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin: 0.8rem 0;
+    }
+
+    .branch-box {
+      min-width: 110px;
+      padding: 0.8rem 0.6rem;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      background: #eef5ff;
+      border: 2px solid #9fc0ff;
+    }
+
+    .branch-box.main {
+      background: #eafaf1;
+      border-color: #88d2a3;
+    }
+
+    .branch-box.feature {
+      background: #fff5e8;
+      border-color: #ffc47d;
+    }
+
+    .arrow {
+      font-size: 1.3rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .mini-legend {
+      display: flex;
+      justify-content: center;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 0.3rem;
+      vertical-align: middle;
+    }
+
+    .dot.blue { background: #8bb3ff; }
+    .dot.orange { background: #ffb66f; }
+    .dot.green { background: #7fd0a7; }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem 1rem 3rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Git 사용설명서</h1>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>1. Git이란?</h2>
+      <p>
+        Git은 파일 변경 이력을 관리하고 여러 사람이 함께 작업할 수 있게 도와주는 <strong>분산 버전 관리 시스템</strong>입니다.
+        소스코드, 문서, 설정 파일 등을 안전하게 저장하고, 이전 버전으로 복구하거나 협업을 쉽게 할 수 있습니다.
+      </p>
+      <div class="tip">
+        Git은 “코드 저장소”를 관리하는 도구라 생각하면 됩니다. 마치 프로젝트의 시간 여행 기록장과 같습니다.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. 왜 Git을 사용하나?</h2>
+      <ul>
+        <li>수정 기록을 남길 수 있음</li>
+        <li>이전 버전으로 되돌릴 수 있음</li>
+        <li>여러 사람이 동시에 작업할 수 있음</li>
+        <li>브랜치를 통해 기능별 개발이 가능함</li>
+        <li>GitHub 같은 원격 저장소와 연동 가능</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>3. Git 기본 용어</h2>
+      <ul>
+        <li><strong>Repository</strong>: 저장소, 프로젝트의 파일과 기록이 있는 공간</li>
+        <li><strong>Commit</strong>: 변경 내용을 저장하는 단위</li>
+        <li><strong>Branch</strong>: 독립적인 작업 흐름</li>
+        <li><strong>Merge</strong>: 브랜치 내용을 합치는 작업</li>
+        <li><strong>Clone</strong>: 원격 저장소를 로컬로 복사</li>
+        <li><strong>Push</strong>: 로컬 변경 내용을 원격 저장소로 올림</li>
+        <li><strong>Pull</strong>: 원격 저장소의 변경을 로컬로 가져옴</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>4. 설치 및 초기 설정</h2>
+
+      <h3>Git 설치</h3>
+      <p>Windows는 Git for Windows를 설치하고, macOS는 Homebrew로 설치할 수 있습니다.</p>
+      <div class="code">git --version</div>
+      <p>설치 후 버전이 출력되면 정상입니다.</p>
+
+      <h3>사용자 정보 설정</h3>
+      <div class="code">git config --global user.name "홍길동"
+git config --global user.email "hong@example.com"</div>
+
+      <h3>설정 확인</h3>
+      <div class="code">git config --list</div>
+    </section>
+
+    <section class="card">
+      <h2>5. 저장소 만들기</h2>
+
+      <h3>새 프로젝트 초기화</h3>
+      <div class="code">mkdir myproject
+cd myproject
+git init</div>
+      <p>이 명령을 실행하면 .git 폴더가 생성되고, Git이 이 폴더를 관리하기 시작합니다.</p>
+
+      <h3>상태 확인</h3>
+      <div class="code">git status</div>
+      <p>현재 어떤 파일이 수정되었는지, 새 파일이 추가되었는지 확인할 수 있습니다.</p>
+    </section>
+
+    <section class="card">
+      <h2>6. 파일 추가와 커밋</h2>
+
+      <h3>파일 추가</h3>
+      <div class="code">git add index.html</div>
+      <p>특정 파일을 스테이징 영역에 올리는 명령입니다.</p>
+
+      <h3>모든 파일 추가</h3>
+      <div class="code">git add .</div>
+
+      <h3>커밋 생성</h3>
+      <div class="code">git commit -m "첫 번째 커밋"</div>
+      <p>커밋은 변경 사항을 기록하는 ‘스냅샷’이라고 생각하면 됩니다.</p>
+
+      <div class="tip">
+        커밋 메시지는 “무엇을 바꿨는지” 한눈에 알 수 있게 짧고 명확하게 작성하는 것이 좋습니다.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>7. 브랜치 사용</h2>
+
+      <h3>브랜치 목록 보기</h3>
+      <div class="code">git branch</div>
+
+      <h3>새 브랜치 만들기</h3>
+      <div class="code">git branch feature/login</div>
+
+      <h3>브랜치 이동</h3>
+      <div class="code">git checkout feature/login</div>
+
+      <h3>브랜치 생성과 이동을 한 번에</h3>
+      <div class="code">git checkout -b feature/login</div>
+
+      <h3>브랜치 병합</h3>
+      <div class="code">git checkout main
+git merge feature/login</div>
+      <p>기능 개발이 끝났으면 메인 브랜치에 합칩니다.</p>
+    </section>
+
+    <section class="card">
+      <h2>8. 원격 저장소와 연결</h2>
+
+      <h3>원격 저장소 추가</h3>
+      <div class="code">git remote add origin https://github.com/username/repository.git</div>
+
+      <h3>원격 저장소 확인</h3>
+      <div class="code">git remote -v</div>
+
+      <h3>원격 저장소에 업로드</h3>
+      <div class="code">git push -u origin main</div>
+      <p>처음 업로드할 때는 -u 옵션을 사용하면 이후 편하게 push가 가능합니다.</p>
+
+      <h3>원격 저장소 갱신</h3>
+      <div class="code">git pull origin main</div>
+    </section>
+
+    <section class="card">
+      <h2>9. GitHub에서 작업하기</h2>
+      <p>GitHub는 Git 저장소를 온라인으로 공유하고 협업을 돕는 서비스입니다.</p>
+      <ol>
+        <li>GitHub에서 새 저장소 생성</li>
+        <li>로컬 저장소와 연결</li>
+        <li>커밋 후 push</li>
+        <li>Pull Request로 코드 리뷰</li>
+        <li>main 브랜치에 병합</li>
+      </ol>
+
+      <div class="tip">
+        팀 프로젝트에서는 작업 전에 항상 pull을 하고, 브랜치를 나눠서 개발하는 습관이 중요합니다.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>10. 자주 쓰는 Git 명령 요약</h2>
+      <div class="code">git init
+git status
+git add .
+git commit -m "메시지"
+git branch
+git checkout -b feature/test
+git merge feature/test
+git remote add origin URL
+git push -u origin main
+git pull origin main
+git log</div>
+    </section>
+
+    <section class="card">
+      <h2>11. 실전 워크플로우</h2>
+      <div class="code">git checkout -b feature/login
+# 기능 구현
+
+git add .
+git commit -m "로그인 기능 추가"
+git push -u origin feature/login
+# GitHub에서 Pull Request 생성
+# 리뷰 후 main 브랜치에 merge</div>
+      <p>이 흐름은 일반적인 협업 개발 방식입니다.</p>
+    </section>
+
+    <section class="card">
+      <h2>12. Git 사용 팁</h2>
+      <ul>
+        <li>작업 전에 git status를 자주 확인하세요.</li>
+        <li>커밋 메시지는 “왜 변경했는지”를 들어내는 내용으로 작성하세요.</li>
+        <li>중요한 작업은 브랜치를 분리해서 실험하세요.</li>
+        <li>실수했을 때는 git log와 git checkout으로 복구할 수 있습니다.</li>
+        <li>프로젝트마다 .gitignore를 설정해 불필요한 파일을 추적하지 않게 하세요.</li>
+      </ul>
+    </section>
+
+    <section class="card visual-section">
+      <h2>13. 한 번에 이해하는 Git 그래픽</h2>
+      <div class="visual-grid">
+        <div class="diagram-card">
+          <h3>1) 작업 → 스테이징 → 커밋</h3>
+          <div class="flow">
+            <div class="repo-box">작업 폴더</div>
+            <div class="arrow">↓</div>
+            <div class="repo-box accent">git add</div>
+            <div class="arrow">↓</div>
+            <div class="repo-box primary">git commit</div>
+          </div>
+          <p>코드를 수정한 뒤, <strong>추가하고</strong> 기록으로 남기는 과정입니다. 이 단계가 있어야 변경 내용을 안전하게 저장할 수 있습니다.</p>
+        </div>
+
+        <div class="diagram-card">
+          <h3>2) 브랜치로 분기</h3>
+          <div class="branch-row">
+            <div class="branch-box main">main</div>
+            <div class="arrow">→</div>
+            <div class="branch-box feature">feature/login</div>
+          </div>
+          <p>브랜치는 프로젝트의 독립적인 작업선입니다. 메인 코드에 영향 주지 않고 기능을 실험하거나 개발할 수 있습니다.</p>
+        </div>
+
+        <div class="diagram-card">
+          <h3>3) 원격 저장소 동기화</h3>
+          <div class="flow">
+            <div class="repo-box">내 컴퓨터</div>
+            <div class="arrow">⇄</div>
+            <div class="repo-box accent">GitHub</div>
+          </div>
+          <p><strong>push</strong>는 로컬 변경을 서버로 올리고, <strong>pull</strong>은 서버의 변경을 내 컴퓨터로 가져옵니다. 협업의 핵심입니다.</p>
+        </div>
+
+        <div class="diagram-card">
+          <h3>4) 병합(merge)</h3>
+          <div class="branch-row">
+            <div class="branch-box feature">feature 작업</div>
+            <div class="arrow">＋</div>
+            <div class="branch-box main">main</div>
+          </div>
+          <p>기능 개발이 끝나면 브랜치 내용을 main에 합칩니다. 이때 완성된 결과가 프로젝트에 반영됩니다.</p>
+        </div>
+      </div>
+
+      <div class="mini-legend">
+        <span><span class="dot blue"></span> 작업 저장</span>
+        <span><span class="dot orange"></span> 준비 단계</span>
+        <span><span class="dot green"></span> 완료 기록</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>14. 마무리</h2>
+      <p>
+        Git은 단순한 저장 도구가 아니라 협업과 버전 관리의 핵심 도구입니다.
+        초반엔 명령이 어렵게 느껴질 수 있지만, 자주 쓰다 보면 기본 흐름이 자연스럽게 익숙해집니다.
+      </p>
+      <p>가장 중요한 것은 <strong>작게 나누어 커밋하고, 브랜치를 활용하며, 정기적으로 push/pull하는 습관</strong>입니다.</p>
+    </section>
+  </main>
+
+  <footer>
+    Git 사용설명서 | 학습용 예시 페이지
+  </footer>
+</body>
+</html>
