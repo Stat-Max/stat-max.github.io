@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 이미지 크기 예시</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: "Pretendard", sans-serif;
+            background: linear-gradient(135deg, #eef6ff, #f5f3ff);
+            color: #1f2937;
+        }
+
+        .wrap {
+            max-width: 920px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.85);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            color: #1d4ed8;
+        }
+
+        .box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .small img { max-width: 120px; }
+        .medium img { max-width: 220px; }
+        .large img { max-width: 320px; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>이미지 크기 조절 예시</h1>
+
+        <div class="box">
+            <div class="card small">
+                <img src="img/ai.png" alt="작은 이미지">
+                <p>작은 크기: width 120px 수준</p>
+            </div>
+            <div class="card medium">
+                <img src="img/ai.png" alt="중간 이미지">
+                <p>중간 크기: width 220px 수준</p>
+            </div>
+            <div class="card large">
+                <img src="img/ai.png" alt="큰 이미지">
+                <p>큰 크기: width 320px 수준</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

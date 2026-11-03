@@ -1,22 +1,253 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>    
-        <meta charset="UTF-8">    <title>AI와 함께하는 웹호스팅</title>
-    </head>
-    <body>    
-        <h1>AI와 함께하는 웹호스팅</h1>    
-        <ul>     
-            <li><a href="block-vs-inline.html">block-vs-inline</a>– CSS 구조</li>     
-            <li><a href="exCss.html">exCss</a>CSS 구조</li>     
-            <li><a href="innerCss.html">innerCss</a>CSS 구조</li>     
-            <li><a href="maPad.html">maPad</a>CSS 구조 </li>     
-            <li><a href="position.html">position</a>– CSS 구조</li>     
-            <li><a href="animation.html">animation</a>– CSS 구조</li>
-            <li><a href="function.html">function</a>– CSS 구조</li>
-            <li><a href="navigation.html">navigation</a>– CSS 구조</li>
-            <li><a href="Transform.html">Transform</a>– CSS 구조</li>
-            <li><a href="transformscale.html">transformscale</a>– CSS 구조</li>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 학습 목록</title>
+    <style>
+        :root {
+            --bg-start: #fff8ef;
+            --bg-end: #eef8ff;
+            --panel: rgba(255, 255, 255, 0.88);
+            --primary: #ff7a18;
+            --primary-dark: #e66200;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --shadow: 0 18px 38px rgba(31, 41, 55, 0.12);
+            --border: rgba(148, 163, 184, 0.2);
+        }
 
-        </ul>  
-    </body>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Pretendard", "Malgun Gothic", sans-serif;
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 48px 20px 60px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #7c2d12, #f97316);
+            color: white;
+            border-radius: 28px;
+            padding: 42px 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -40px;
+            top: -40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(2rem, 3vw, 3rem);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            margin: 0;
+            max-width: 640px;
+            color: rgba(255,255,255,0.84);
+            font-size: 1rem;
+        }
+
+        .content {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 22px 18px;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(249, 115, 22, 0.09);
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 1.15rem;
+        }
+
+        .card p {
+            margin: 0 0 16px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .card a:hover {
+            color: var(--primary-dark);
+        }
+
+        .card a::after {
+            content: "→";
+            transition: transform 0.2s ease;
+        }
+
+        .card a:hover::after {
+            transform: translateX(4px);
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: 28px 20px;
+            }
+
+            .page {
+                padding-top: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <span class="eyebrow">Study list</span>
+            <h1>CSS 학습 자료</h1>
+            <p class="subtitle">
+                레이아웃, 배치, 애니메이션, 변형, 반응형 스타일까지 CSS 핵심 개념을 체계적으로 정리한 목록입니다.
+            </p>
+        </header>
+
+        <main class="content">
+            <article class="card">
+                <span class="tag">기초</span>
+                <h2>Block vs Inline</h2>
+                <p>블록 요소와 인라인 요소의 차이를 이해하고 구조를 빠르게 익힙니다.</p>
+                <a href="block-vs-inline.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">예제</span>
+                <h2>exCss</h2>
+                <p>다양한 CSS 속성을 직접 적용하며 실습하는 예제 페이지입니다.</p>
+                <a href="exCss.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">내장 스타일</span>
+                <h2>innerCss</h2>
+                <p>HTML 내부에 스타일을 적용하는 방법을 학습합니다.</p>
+                <a href="innerCss.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">간격</span>
+                <h2>Margin & Padding</h2>
+                <p>여백을 조절하는 margin, padding의 의미와 차이를 정리합니다.</p>
+                <a href="maPad.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">배치</span>
+                <h2>Position</h2>
+                <p>relative, absolute, fixed 등의 레이아웃 배치 기법을 이해합니다.</p>
+                <a href="position.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">애니메이션</span>
+                <h2>Animation</h2>
+                <p>전환과 키프레임 기반 애니메이션 기법을 활용해 움직임을 구현합니다.</p>
+                <a href="animation.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">함수형</span>
+                <h2>Function</h2>
+                <p>CSS에서 반복적으로 쓰는 함수와 값 표현 방식을 익힙니다.</p>
+                <a href="function.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">내비게이션</span>
+                <h2>Navigation</h2>
+                <p>메뉴와 네비게이션 레이아웃을 구성하는 실전 스타일을 배웁니다.</p>
+                <a href="navigation.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">변형</span>
+                <h2>Transform</h2>
+                <p>회전, 이동, 확대와 같은 변형 효과를 적용하는 기초를 다룹니다.</p>
+                <a href="Transform.html">자료 보기</a>
+            </article>
+
+            <article class="card">
+                <span class="tag">확대</span>
+                <h2>Transform Scale</h2>
+                <p>크기 변환을 활용한 인터랙티브한 시각적 효과를 연습합니다.</p>
+                <a href="transformscale.html">자료 보기</a>
+            </article>
+        </main>
+
+        <footer>
+            <p>© 2026 CSS Study Notes</p>
+        </footer>
+    </div>
+</body>
 </html>
